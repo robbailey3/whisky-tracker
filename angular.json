@@ -5,7 +5,7 @@
       "projectType": "application",
       "root": "apps/site",
       "sourceRoot": "apps/site/src",
-      "prefix": "",
+      "prefix": "rob",
       "architect": {
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
@@ -120,7 +120,7 @@
       "projectType": "library",
       "root": "libs/ui-components",
       "sourceRoot": "libs/ui-components/src",
-      "prefix": "",
+      "prefix": "rob",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",

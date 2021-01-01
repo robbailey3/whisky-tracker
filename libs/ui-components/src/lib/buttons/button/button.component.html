@@ -1,0 +1,33 @@
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
+<ng-container *ngIf="!href; else noHref">
+  <button
+    [ngClass]="{
+      'btn-primary': variant === 'primary',
+      'btn-secondary': variant === 'secondary',
+      'btn-tertiary': variant === 'tertiary',
+      'btn-danger': variant === 'danger',
+      'btn-ghost': variant === 'ghost'
+    }"
+    class="btn"
+    (click)="handleClick($event)"
+  >
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </button>
+</ng-container>
+<ng-template #noHref>
+  <a
+    [href]="href"
+    [ngClass]="{
+      'btn-primary': variant === 'primary',
+      'btn-secondary': variant === 'secondary',
+      'btn-tertiary': variant === 'tertiary',
+      'btn-danger': variant === 'danger',
+      'btn-ghost': variant === 'ghost'
+    }"
+    class="btn"
+    (click)="handleClick($event)"
+    ><ng-container *ngTemplateOutlet="content"></ng-container
+  ></a>
+</ng-template>
