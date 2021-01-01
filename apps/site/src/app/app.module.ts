@@ -5,11 +5,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { HomepageComponent } from './homepage/homepage.component';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, GlobalModule, UiComponentsModule],
+  imports: [AppRoutingModule, BrowserModule, GlobalModule, UiComponentsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
