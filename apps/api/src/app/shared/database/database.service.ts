@@ -121,17 +121,17 @@ export class DatabaseService implements OnModuleInit {
 
   public findOneAndUpdate<T>(
     filter: FilterQuery<T>,
-    update: UpdateQuery<any>,
+    update: UpdateQuery<T>,
     options: FindOneAndUpdateOption<T>
-  ): Observable<FindAndModifyWriteOpResultObject<any>> {
+  ): Observable<FindAndModifyWriteOpResultObject<T>> {
     return from(this.collection.findOneAndUpdate(filter, update, options));
   }
 
   public findOneAndReplace<T>(
     filter: FilterQuery<T>,
-    replacement: any,
+    replacement: Record<string, unknown>,
     options: FindOneAndReplaceOption<T> = {}
-  ): Observable<FindAndModifyWriteOpResultObject<any>> {
+  ): Observable<FindAndModifyWriteOpResultObject<T>> {
     return from(
       this.collection.findOneAndReplace(filter, replacement, options)
     );
@@ -140,7 +140,7 @@ export class DatabaseService implements OnModuleInit {
   public findOneAndDelete<T>(
     filter: FilterQuery<T>,
     options: FindOneAndDeleteOption<T> = {}
-  ): Observable<FindAndModifyWriteOpResultObject<any>> {
+  ): Observable<FindAndModifyWriteOpResultObject<T>> {
     return from(this.collection.findOneAndDelete(filter, options));
   }
 
@@ -161,21 +161,12 @@ export class DatabaseService implements OnModuleInit {
   }
 
   public insertOne<T>(
-    document: any,
+    document: T,
     options: CollectionInsertOneOptions = {}
   ): Observable<T> {
-    return new Observable((subscriber: Subscriber<any>) => {
-      this.collection
-        .insertOne(document, options)
-        .then((result: InsertOneWriteOpResult<any>) => {
-          subscriber.next(result.ops[0]);
-          subscriber.complete();
-        })
-        .catch((err) => {
-          subscriber.error(err);
-          subscriber.complete();
-        });
-    });
+    return from(this.collection.insertOne(document, options)).pipe(
+      map((result) => result.ops[0])
+    );
   }
 
   public insertMany<T>(

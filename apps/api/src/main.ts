@@ -1,3 +1,4 @@
+import { QueryParserInterceptor } from './app/shared/query-parser/query-parser.interceptor';
 import { TransformInterceptor } from './app/shared/transform/transform.interceptor';
 import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
@@ -25,6 +26,7 @@ async function bootstrap() {
   app.enableCors({ origin: '*' });
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
+  app.useGlobalInterceptors(new QueryParserInterceptor());
 
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
