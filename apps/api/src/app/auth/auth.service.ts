@@ -1,4 +1,3 @@
-import { DatabaseService } from './../shared/database/database.service';
 import { UserService } from './../user/user.service';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';

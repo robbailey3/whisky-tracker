@@ -1,3 +1,4 @@
+import { TransformInterceptor } from './app/shared/transform/transform.interceptor';
 import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
 import * as helmet from 'helmet';
@@ -23,6 +24,7 @@ async function bootstrap() {
   );
   app.enableCors({ origin: '*' });
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalInterceptors(new TransformInterceptor());
 
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
