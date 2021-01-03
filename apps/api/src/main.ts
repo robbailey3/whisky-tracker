@@ -1,14 +1,15 @@
-import { QueryParserInterceptor } from './app/shared/query-parser/query-parser.interceptor';
-import { TransformInterceptor } from './app/shared/transform/transform.interceptor';
+import { Logger, ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
 import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
 import * as helmet from 'helmet';
 import * as rateLimit from 'express-rate-limit';
-import { Logger } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
+
 import { AppModule } from './app/app.module';
+import { QueryParserInterceptor } from './app/shared/query-parser/query-parser.interceptor';
+import { TransformInterceptor } from './app/shared/transform/transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -20,11 +21,19 @@ async function bootstrap() {
   app.use(
     rateLimit({
       windowMs: 60 * 1000,
-      max: 1000,
+      max: 1000
     })
   );
   app.enableCors({ origin: '*' });
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      validationError: { target: true, value: true },
+      transform: true,
+      forbidUnknownValues: true,
+      forbidNonWhitelisted: true,
+      whitelist: true
+    })
+  );
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalInterceptors(new QueryParserInterceptor());
 
@@ -44,7 +53,7 @@ async function bootstrap() {
 
   const port = process.env.PORT || 3333;
   await app.listen(port, () => {
-    Logger.log('Listening at http://localhost:' + port + '/' + globalPrefix);
+    Logger.log(`Listening at http://localhost:${port}/${globalPrefix}`);
   });
 }
 

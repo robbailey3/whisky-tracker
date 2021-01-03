@@ -28,11 +28,11 @@ export class UserService {
     return this.db.setCollection('users').findOne(query, options);
   }
 
-  public async create(newUser: Partial<UserDto>): Promise<UserDto> {
+  public async create(newUser: Partial<UserDto>): Promise<Partial<UserDto>> {
     newUser.password = await bcrypt.hash(newUser.password, 12);
     return await this.db
       .setCollection('users')
-      .insertOne<UserDto>(newUser)
+      .insertOne<Partial<UserDto>>(newUser)
       .toPromise();
   }
 

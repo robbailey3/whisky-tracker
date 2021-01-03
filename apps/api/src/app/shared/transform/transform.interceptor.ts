@@ -19,9 +19,11 @@ export class TransformInterceptor<T>
     context: ExecutionContext,
     next: CallHandler
   ): Observable<any> {
+    const response = context.switchToHttp().getResponse();
     return next.handle().pipe(
       map((results: any) => {
         const common = {
+          status: response.statusCode,
           timestamp: Date.now(),
           count: Array.isArray(results) ? results.length : results ? 1 : 0,
         };

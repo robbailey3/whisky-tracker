@@ -1,8 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsNumber, IsOptional, Max, Min } from 'class-validator';
-import { FilterQuery } from 'mongodb';
-import { WhiskyDto } from './../../whisky/dto/whisky.dto';
+import {
+  IsNumber,
+  isObject,
+  IsOptional,
+  Max,
+  Min,
+  ValidateNested,
+} from 'class-validator';
+import { FilterQuery, SortOptionObject } from 'mongodb';
 
 export class EntityQuery<T> {
   @Type(() => Number)
@@ -47,5 +53,5 @@ export class EntityQuery<T> {
     name: 'sort',
     description: 'How to sort the results',
   })
-  public sort: any;
+  public sort: SortOptionObject<T>;
 }
