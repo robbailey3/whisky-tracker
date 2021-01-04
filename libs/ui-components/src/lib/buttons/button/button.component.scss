@@ -1,19 +1,27 @@
 .btn {
-  @apply py-2 px-3 text-center rounded-lg inline-block;
-}
+  @apply py-2 px-3 text-center rounded-lg inline-block shadow-2xl duration-200;
 
-.btn-primary {
-  @apply bg-blue-900 text-white;
-}
+  &.btn-primary {
+    @apply bg-brand text-white dark:bg-chestnut-500;
+    &:hover,
+    &:focus {
+      @apply bg-chestnut-600;
+    }
+  }
 
-.btn-secondary {
-}
+  &.btn-secondary {
+  }
 
-.btn-tertiary {
-}
+  &.btn-tertiary {
+  }
 
-.btn-ghost {
-}
+  &.btn-ghost {
+  }
 
-.btn-danger {
+  &.btn-danger {
+  }
+
+  &:disabled {
+    @apply bg-gray-400 cursor-not-allowed;
+  }
 }

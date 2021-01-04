@@ -2,3 +2,8 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 /* You can add global styles to this file, and also import other style files */
+html,
+body {
+  @apply font-sans-serif text-brand dark:text-white dark:bg-dark;
+  font-size: 18px;
+}

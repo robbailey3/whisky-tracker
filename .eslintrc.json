@@ -16,7 +16,11 @@
               { "sourceTag": "*", "onlyDependOnLibsWithTags": ["*"] }
             ]
           }
-        ]
+        ],
+        "import/no-extraneous-dependencies": [0],
+        "import/no-unresolved": [0],
+        "import/prefer-default-export": [0],
+        "@typescript-eslint/no-var-requires": [0]
       }
     },
     {
