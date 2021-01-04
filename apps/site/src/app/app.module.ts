@@ -5,10 +5,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [AppRoutingModule, BrowserModule, GlobalModule, UiComponentsModule],
+  imports: [AppRoutingModule, BrowserModule, GlobalModule, UiComponentsModule, FontAwesomeModule],
   providers: [],
   bootstrap: [AppComponent],
 })
