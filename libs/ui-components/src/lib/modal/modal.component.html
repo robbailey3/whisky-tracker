@@ -1,7 +1,7 @@
 <div class="modal-overlay" *ngIf="isActive"></div>
 <dialog class="modal" [open]="isActive">
   <div class="modal-controls">
-    <rob-button variant="ghost" (click)="close()"
+    <rob-button variant="ghost" [handleClick]="close()"
       ><fa-icon [icon]="faWindowClose"></fa-icon
     ></rob-button>
   </div>
