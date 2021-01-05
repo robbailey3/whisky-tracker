@@ -3,5 +3,6 @@ module.exports = {
   addons: [
     { name: '@storybook/addon-essentials', options: { docs: false } },
     '@storybook/addon-a11y'
-  ]
+  ],
+  presets: ['storybook-dark-mode']
 };

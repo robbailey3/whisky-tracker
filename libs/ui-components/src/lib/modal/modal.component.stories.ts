@@ -18,18 +18,26 @@ export default {
 };
 
 const Template: Story<ModalComponent> = (args: ModalArgs) => {
+  console.log({ args });
   return {
     component: ModalComponent,
-    props: { isActive: args.isActive, modalContent: args.modalContent },
-    template: `<rob-modal [isActive]="isActive"><div [innerHTML]="modalContent" style="padding: 2rem"></div></rob-modal>`
+    props: { state: args.state, modalContent: args.modalContent },
+    template: `<rob-modal [state]="state"><div [innerHTML]="modalContent" style="padding: 2rem"></div></rob-modal>`
   };
 };
 
 export const Base: Story<ModalArgs> = Template.bind({});
 
 Base.args = {
-  isActive: true,
+  state: 'open',
   modalContent: `<h1>Title</h1>`
 };
 
-Base.argTypes = { modalContent: {} };
+Base.argTypes = {
+  state: {
+    control: {
+      type: 'select',
+      options: ['open', 'closed']
+    }
+  }
+};

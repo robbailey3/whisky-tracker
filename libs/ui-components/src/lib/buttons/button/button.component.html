@@ -1,6 +1,3 @@
-<ng-template #content>
-  <ng-content></ng-content>
-</ng-template>
 <ng-container *ngIf="!href; else noHref">
   <button
     [ngClass]="{
@@ -8,13 +5,20 @@
       'btn-secondary': variant === 'secondary',
       'btn-tertiary': variant === 'tertiary',
       'btn-danger': variant === 'danger',
-      'btn-ghost': variant === 'ghost'
+      'btn-ghost': variant === 'ghost',
+      'btn-xs': size === 'xs',
+      'btn-sm': size === 'sm',
+      'btn-md': size === 'md',
+      'btn-lg': size === 'lg',
+      'btn-xl': size === 'xl',
+      'btn-xxl': size === 'xxl'
     }"
     [disabled]="disabled"
     class="btn"
-    (click)="handleClick($event)"
+    (click)="handleButtonClick($event)"
   >
-    <ng-container *ngTemplateOutlet="content"></ng-container>
+    <span class="icon" *ngIf="icon"><fa-icon [icon]="icon"></fa-icon></span>
+    <span class="button-label">{{ label }}</span>
   </button>
 </ng-container>
 <ng-template #noHref>
@@ -28,7 +32,14 @@
       'btn-ghost': variant === 'ghost'
     }"
     class="btn"
-    (click)="handleClick($event)"
-    ><ng-container *ngTemplateOutlet="content"></ng-container
-  ></a>
+    (click)="handleButtonClick($event)"
+  >
+    <span
+      class="icon leading-none"
+      [ngClass]="{ 'mr-2': label !== '' }"
+      *ngIf="icon"
+      ><fa-icon [icon]="icon"></fa-icon
+    ></span>
+    <span class="button-label">{{ label }}</span>
+  </a>
 </ng-template>

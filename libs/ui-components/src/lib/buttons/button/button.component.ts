@@ -1,20 +1,27 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IconDefinition, IconProp } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'rob-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent {
   @Input() variant: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'ghost';
+
+  @Input() size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' = 'md';
 
   @Input() href?: string;
 
-  @Input() handleClick: ($event: MouseEvent) => void;
-
   @Input() disabled: boolean;
 
-  ngOnInit() {
-    console.log(this);
+  @Input() label = '';
+
+  @Input() icon: IconProp | IconDefinition;
+
+  @Output() public buttonClick: EventEmitter<MouseEvent> = new EventEmitter();
+
+  public handleButtonClick($event: MouseEvent) {
+    this.buttonClick.emit($event);
   }
 }

@@ -1,8 +1,10 @@
-<div class="modal-overlay" *ngIf="isActive"></div>
-<dialog class="modal" [open]="isActive">
+<div class="modal-overlay" *ngIf="state === 'open'"></div>
+<dialog class="modal" [open]="state === 'open'">
   <div class="modal-controls">
-    <rob-button variant="ghost" [handleClick]="close()"
-      ><fa-icon [icon]="faWindowClose"></fa-icon
+    <rob-button
+      variant="ghost"
+      (buttonClick)="close()"
+      [icon]="faWindowClose"
     ></rob-button>
   </div>
   <ng-content></ng-content>

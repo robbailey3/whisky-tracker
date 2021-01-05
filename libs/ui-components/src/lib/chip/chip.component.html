@@ -1,1 +1,11 @@
-<p>chip works!</p>
+<span class="chip" [title]="title">
+  <span class="chip-content" [ngClass]="{ 'mr-2': dismissable }">
+    <ng-content></ng-content>
+  </span>
+  <rob-button
+    [variant]="ghost"
+    [size]="xs"
+    [icon]="faTimes"
+    *ngIf="dismissable"
+  ></rob-button>
+</span>

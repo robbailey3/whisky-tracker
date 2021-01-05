@@ -4,10 +4,13 @@
 }
 
 .modal {
-  @apply fixed shadow-2xl rounded-lg bg-white;
+  @apply fixed shadow-2xl rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-50 p-0;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 999;
   margin: 0;
+  .modal-controls {
+    @apply flex justify-end px-2 py-4;
+  }
 }

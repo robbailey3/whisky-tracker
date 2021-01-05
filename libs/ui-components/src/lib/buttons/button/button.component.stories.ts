@@ -1,4 +1,6 @@
 import { moduleMetadata, Story } from '@storybook/angular';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faAdjust } from '@fortawesome/free-solid-svg-icons';
 
 import { action } from '@storybook/addon-actions';
 
@@ -7,7 +9,12 @@ import { ButtonComponent } from './button.component';
 export default {
   title: 'Buttons',
   component: ButtonComponent,
-  decorators: [moduleMetadata({ declarations: [ButtonComponent] })]
+  decorators: [
+    moduleMetadata({
+      declarations: [ButtonComponent],
+      imports: [FontAwesomeModule]
+    })
+  ]
 };
 
 const Template: Story<ButtonComponent> = (
@@ -16,18 +23,15 @@ const Template: Story<ButtonComponent> = (
   return {
     component: ButtonComponent,
     props: {
+      icon: faAdjust,
       variant: args.variant,
-      buttonText: `${args.variant
-        .substring(0, 1)
-        .toUpperCase()}${args.variant.slice(1)} Button`,
+      label: args.label,
       handleClick: () => {
-        console.log({ action });
         action('Button clicked');
       },
       href: args.href,
       disabled: args.disabled
-    },
-    template: `<rob-button [variant]="variant" [href]="href" [handleClick]="handleClick" [disabled]="disabled">{{buttonText}}</rob-button>`
+    }
   };
 };
 
@@ -37,8 +41,10 @@ export const Base: Story<
 
 Base.args = {
   variant: 'primary',
+  label: 'Button',
   href: '',
-  disabled: false
+  disabled: false,
+  icon: faAdjust
 };
 Base.argTypes = {
   variant: {
@@ -46,5 +52,8 @@ Base.argTypes = {
       type: 'select',
       options: ['primary', 'secondary', 'tertiary', 'danger', 'ghost']
     }
+  },
+  icon: {
+    control: false
   }
 };

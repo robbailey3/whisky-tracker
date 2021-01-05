@@ -1,9 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import {
-  FaIconComponent,
-  FontAwesomeModule
-} from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormItemsModule } from './form-items/form-items.module';
 import { ButtonsModule } from './buttons/buttons.module';
 import { ModalComponent } from './modal/modal.component';
@@ -13,11 +10,11 @@ import { AccordionModule } from './accordion/accordion.module';
 import { CardComponent } from './card/card.component';
 
 @NgModule({
-  imports: [CommonModule, ButtonsModule, FontAwesomeModule],
+  imports: [CommonModule],
   exports: [
-    FontAwesomeModule,
     AccordionModule,
     ButtonsModule,
+    FontAwesomeModule,
     FormItemsModule,
     ChipComponent,
     FormItemsModule,
@@ -26,8 +23,4 @@ import { CardComponent } from './card/card.component';
   ],
   declarations: [ModalComponent, ChipComponent, TooltipComponent, CardComponent]
 })
-export class UiComponentsModule {
-  constructor() {
-    console.log(FontAwesomeModule);
-  }
-}
+export class UiComponentsModule {}

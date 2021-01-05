@@ -1,5 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
+
+const focusableElements = [];
+
 @Component({
   selector: 'rob-modal',
   templateUrl: './modal.component.html',
@@ -7,20 +10,28 @@ import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 })
 export class ModalComponent implements OnInit {
   public faWindowClose = faWindowClose;
-  @Input() isActive: boolean;
 
-  constructor() {}
+  @Input() public state: 'open' | 'closed';
 
-  ngOnInit(): void {
+  @HostListener('window:keyup', ['$event'])
+  public onKeyup(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.close();
+    }
+  }
+
+  public ngOnInit(): void {
     this.focusFirstElement();
+    console.log(this);
   }
 
   public focusFirstElement() {
-    console.log(this);
     // TODO: Find the first focusable element and focus on it.
   }
 
   public close() {
-    this.isActive = false;
+    console.log('close');
+    this.state = 'closed';
+    console.log(this);
   }
 }
