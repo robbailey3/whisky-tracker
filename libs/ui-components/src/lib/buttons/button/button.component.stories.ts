@@ -1,6 +1,6 @@
 import { moduleMetadata, Story } from '@storybook/angular';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faAdjust } from '@fortawesome/free-solid-svg-icons';
+import { faIcons } from '@fortawesome/free-solid-svg-icons';
 
 import { action } from '@storybook/addon-actions';
 
@@ -23,7 +23,7 @@ const Template: Story<ButtonComponent> = (
   return {
     component: ButtonComponent,
     props: {
-      icon: faAdjust,
+      icon: faIcons,
       variant: args.variant,
       label: args.label,
       handleClick: () => {
@@ -44,7 +44,7 @@ Base.args = {
   label: 'Button',
   href: '',
   disabled: false,
-  icon: faAdjust
+  icon: faIcons
 };
 Base.argTypes = {
   variant: {

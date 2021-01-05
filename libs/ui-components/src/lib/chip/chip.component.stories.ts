@@ -22,6 +22,21 @@ export const primary = (args: ChipComponent) => ({
 
 primary.args = {
   title: '',
-  type: 'blue',
+  type: 'sahara-sand',
   dismissable: false
 } as ChipComponent;
+
+primary.argTypes = {
+  type: {
+    control: {
+      type: 'select',
+      options: [
+        'portafino',
+        'fire',
+        'sahara-sand',
+        'glade-green',
+        'black-pearl'
+      ]
+    }
+  }
+};

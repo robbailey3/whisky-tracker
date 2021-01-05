@@ -8,9 +8,7 @@ module.exports = (isProd) => ({
   theme: {
     extend: {
       fontFamily: {
-        display: ['Sriracha', 'cursive'],
-        'sans-serif': ['Ubuntu', 'Comic Sans', 'Helvetica', 'sans-serif'],
-        monospace: ['Ubuntu Mono', 'Consolas', 'monospace']
+        'sans-serif': ['Work Sans', 'Arial', 'Helvetica', 'sans-serif'],
       },
       colors: {
         portafino: {

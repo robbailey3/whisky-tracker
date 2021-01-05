@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
-import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const focusableElements = [];
 
@@ -9,7 +9,7 @@ const focusableElements = [];
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit {
-  public faWindowClose = faWindowClose;
+  public faTimes = faTimes;
 
   @Input() public state: 'open' | 'closed';
 

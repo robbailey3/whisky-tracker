@@ -10,7 +10,8 @@
   transform: translate(-50%, -50%);
   z-index: 999;
   margin: 0;
+  min-width: 50%;
   .modal-controls {
-    @apply flex justify-end px-2 py-4;
+    @apply flex justify-end p-2;
   }
 }

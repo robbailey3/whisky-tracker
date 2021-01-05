@@ -1,10 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewEncapsulation
+} from '@angular/core';
 import { IconDefinition, IconProp } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'rob-button',
   templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss']
+  styleUrls: ['./button.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ButtonComponent {
   @Input() variant: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'ghost';

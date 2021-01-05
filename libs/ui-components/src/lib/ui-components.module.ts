@@ -10,7 +10,7 @@ import { AccordionModule } from './accordion/accordion.module';
 import { CardComponent } from './card/card.component';
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, ButtonsModule, FontAwesomeModule, FormItemsModule],
   exports: [
     AccordionModule,
     ButtonsModule,

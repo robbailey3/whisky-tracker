@@ -4,6 +4,9 @@
   &:focus {
     @apply shadow-lg;
   }
+  &:active {
+    @apply shadow-none;
+  }
 
   &.btn-xs {
     @apply py-0 px-1;
@@ -61,10 +64,10 @@
   }
 
   &:disabled {
-    @apply bg-gray-400 cursor-not-allowed text-gray-900;
+    @apply bg-gray-400 cursor-not-allowed text-gray-600;
     &:hover,
     &:focus {
-      @apply bg-gray-500 text-gray-900;
+      @apply bg-gray-500 text-gray-700;
     }
   }
 }
