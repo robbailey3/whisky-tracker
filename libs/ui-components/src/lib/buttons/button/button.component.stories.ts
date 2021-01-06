@@ -7,7 +7,7 @@ import { action } from '@storybook/addon-actions';
 import { ButtonComponent } from './button.component';
 
 export default {
-  title: 'Buttons',
+  title: 'Button',
   component: ButtonComponent,
   decorators: [
     moduleMetadata({
@@ -35,18 +35,18 @@ const Template: Story<ButtonComponent> = (
   };
 };
 
-export const Base: Story<
+export const Button: Story<
   ButtonComponent & { buttonText: string }
 > = Template.bind({});
 
-Base.args = {
+Button.args = {
   variant: 'primary',
   label: 'Button',
   href: '',
   disabled: false,
   icon: faIcons
 };
-Base.argTypes = {
+Button.argTypes = {
   variant: {
     control: {
       type: 'select',

@@ -4,7 +4,7 @@ export default {
   title: 'Card'
 };
 
-export const primary = (args: { content: string }) => ({
+export const Card = (args: { content: string }) => ({
   moduleMetadata: {
     declarations: [CardComponent]
   },
@@ -15,6 +15,6 @@ export const primary = (args: { content: string }) => ({
   template: `<rob-card><div [innerHTML]="content"></div></rob-card>`
 });
 
-primary.args = {
+Card.args = {
   content: `<p>Card Component</p>`
 };

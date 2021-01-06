@@ -3,10 +3,10 @@ import { ButtonsModule } from '../buttons/buttons.module';
 import { ChipComponent } from './chip.component';
 
 export default {
-  title: 'ChipComponent'
+  title: 'Chip'
 };
 
-export const primary = (args: ChipComponent) => ({
+export const Chip = (args: ChipComponent) => ({
   moduleMetadata: {
     imports: [FontAwesomeModule, ButtonsModule],
     declarations: [ChipComponent]
@@ -20,13 +20,13 @@ export const primary = (args: ChipComponent) => ({
   template: `<rob-chip [title]="title" [type]="type" [dismissable]="dismissable">Chip</rob-chip>`
 });
 
-primary.args = {
+Chip.args = {
   title: '',
   type: 'sahara-sand',
   dismissable: false
 } as ChipComponent;
 
-primary.argTypes = {
+Chip.argTypes = {
   type: {
     control: {
       type: 'select',

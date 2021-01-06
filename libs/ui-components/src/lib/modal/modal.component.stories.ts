@@ -1,6 +1,6 @@
-import { ButtonsModule } from './../buttons/buttons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { moduleMetadata, Story } from '@storybook/angular';
+import { ButtonsModule } from '../buttons/buttons.module';
 
 import { ModalComponent } from './modal.component';
 
@@ -18,7 +18,6 @@ export default {
 };
 
 const Template: Story<ModalComponent> = (args: ModalArgs) => {
-  console.log({ args });
   return {
     component: ModalComponent,
     props: { state: args.state, modalContent: args.modalContent },
@@ -26,14 +25,14 @@ const Template: Story<ModalComponent> = (args: ModalArgs) => {
   };
 };
 
-export const Base: Story<ModalArgs> = Template.bind({});
+export const Modal: Story<ModalArgs> = Template.bind({});
 
-Base.args = {
+Modal.args = {
   state: 'open',
   modalContent: `<h1>Title</h1>`
 };
 
-Base.argTypes = {
+Modal.argTypes = {
   state: {
     control: {
       type: 'select',
