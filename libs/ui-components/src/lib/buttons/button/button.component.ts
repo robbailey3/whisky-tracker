@@ -7,6 +7,12 @@ import {
 } from '@angular/core';
 import { IconDefinition, IconProp } from '@fortawesome/fontawesome-svg-core';
 
+/**
+ *
+ * A reusable simple Button component
+ * @export
+ * @class ButtonComponent
+ */
 @Component({
   selector: 'rob-button',
   templateUrl: './button.component.html',

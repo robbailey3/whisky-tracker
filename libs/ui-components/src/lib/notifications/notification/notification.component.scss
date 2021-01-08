@@ -1,0 +1,11 @@
+.notification {
+  @apply m-4 relative z-50 shadow-2xl rounded bg-red-100;
+  &.notification-success {
+  }
+  &.notification-error {
+  }
+  &.notification-info {
+  }
+  &.notification-warning {
+  }
+}

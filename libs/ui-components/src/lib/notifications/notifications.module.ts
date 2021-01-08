@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ToastComponent } from './toast/toast.component';
-
-
+import { ButtonsModule } from '../buttons/buttons.module';
+import { NotificationComponent } from './notification/notification.component';
+import { NotificationContainerComponent } from './notification-container/notification-container.component';
 
 @NgModule({
-  declarations: [ToastComponent],
-  imports: [
-    CommonModule
-  ],
-  exports: [ToastComponent]
+  declarations: [NotificationComponent, NotificationContainerComponent],
+  imports: [CommonModule, ButtonsModule],
+  exports: [NotificationComponent, NotificationContainerComponent]
 })
-export class NotificationsModule { }
+export class NotificationsModule {}
