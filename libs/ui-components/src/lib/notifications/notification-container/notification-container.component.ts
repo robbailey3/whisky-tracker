@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Notification } from '../notification.interface';
+import { Notification } from '../notification.class';
 import { NotificationsService } from '../notifications.service';
 
 @Component({
@@ -26,8 +26,10 @@ export class NotificationContainerComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToNotifications() {
-    this.$subscription = this.notificationsService.$notification.subscribe({
-      next: (notification) => this.notifications.push(notification)
+    this.$subscription = this.notificationsService.$notifications.subscribe({
+      next: (notifications) => {
+        this.notifications = notifications;
+      }
     });
   }
 }

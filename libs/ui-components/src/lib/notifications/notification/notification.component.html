@@ -1,6 +1,6 @@
 <div
   class="notification"
-  *ngIf="isActive"
+  *ngIf="notification.isActive"
   [ngClass]="{
     'notification-success': notification.type === 'success',
     'notification-error': notification.type === 'error',
@@ -8,6 +8,7 @@
     'notification-warning': notification.type === 'warning'
   }"
 >
+  {{ notification.content }}
   <rob-button
     variant="ghost"
     [icon]="faTimes"

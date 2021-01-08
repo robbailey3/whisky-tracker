@@ -12,19 +12,13 @@
     [(ngModel)]="value"
     [disabled]="disabled"
     [required]="required"
-    (keyup)="change($event)"
+    (keyup)="change()"
     [email]="type === 'email'"
     #input="ngModel"
   />
   <div class="form-control-helpers">
     <div class="helper-text-container">
       <span class="helper-text" *ngIf="helperText">{{ helperText }}</span>
-    </div>
-    <div class="word-counter">
-      <span class="word-count-current">{{ wordCount }}&nbsp;</span>
-      <span class="word-count-max" *ngIf="maxWordCount"
-        >/&nbsp;{{ maxWordCount }}</span
-      >
     </div>
   </div>
   <div *ngIf="input.errors" class="form-errors-container">

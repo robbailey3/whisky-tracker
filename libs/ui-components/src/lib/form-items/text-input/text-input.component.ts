@@ -1,12 +1,5 @@
 import { Component, forwardRef, Input } from '@angular/core';
-import {
-  ControlValueAccessor,
-  FormControl,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  ValidationErrors,
-  Validator
-} from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'rob-text-input',
