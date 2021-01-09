@@ -2,9 +2,9 @@ export class Notification {
   constructor(
     public content: string,
     public type: 'success' | 'error' | 'warning' | 'info',
-    public autoDismiss: boolean,
-    public autoDismissTimeout: number,
-    public isActive: boolean
+    public autoDismiss: boolean = true,
+    public autoDismissTimeout: number = 10000,
+    public isActive: boolean = true
   ) {
     if (this.autoDismissTimeout) {
       setTimeout(() => {

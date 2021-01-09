@@ -1,1 +1,25 @@
-<p>radio-button works!</p>
+<fieldset [id]="id" class="radio-button-group">
+  <legend>{{ label }}</legend>
+  <div class="radio-button" *ngFor="let option of options; let i = index">
+    <div class="form-group">
+      <input
+        class="form-control"
+        type="radio"
+        [name]="name"
+        [id]="id + '__' + i"
+        [required]="required"
+        [value]="option.value"
+        [checked]="value === option.value"
+        [(ngModel)]="value"
+        #input="ngModel"
+      />
+      <label class="form-label" [for]="id + '__' + i">{{ option.key }}</label>
+    </div>
+    {{ input.errors | json }}
+  </div>
+  <div class="form-control-helpers">
+    <div class="helper-text-container">
+      <span class="helper-text" *ngIf="helperText">{{ helperText }}</span>
+    </div>
+  </div>
+</fieldset>
