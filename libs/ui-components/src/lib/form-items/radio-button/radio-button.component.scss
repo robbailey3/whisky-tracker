@@ -1,7 +1,6 @@
 .radio-button {
-  .form-group {
-    @apply flex flex-wrap items-center;
-  }
+  @apply flex flex-wrap items-center;
+
   .form-control {
     position: absolute;
     width: 1px;
@@ -33,5 +32,8 @@
     top: 0.25rem;
     left: 0.25rem;
     transform: scale(1);
+  }
+  .form-errors-container {
+    width: 100%;
   }
 }

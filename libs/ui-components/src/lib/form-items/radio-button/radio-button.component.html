@@ -1,7 +1,10 @@
 <fieldset [id]="id" class="radio-button-group">
-  <legend>{{ label }}</legend>
-  <div class="radio-button" *ngFor="let option of options; let i = index">
-    <div class="form-group">
+  <div class="form-group">
+    <legend>{{ label }}</legend>
+    <div
+      class="radio-button"
+      *ngFor="let option of options; let i = index; let isLast = last"
+    >
       <input
         class="form-control"
         type="radio"
@@ -14,12 +17,16 @@
         #input="ngModel"
       />
       <label class="form-label" [for]="id + '__' + i">{{ option.key }}</label>
+      <div class="form-errors-container">
+        <div *ngIf="isLast && input.errors?.required" class="form-error">
+          {{ label }} is required
+        </div>
+      </div>
     </div>
-    {{ input.errors | json }}
-  </div>
-  <div class="form-control-helpers">
-    <div class="helper-text-container">
-      <span class="helper-text" *ngIf="helperText">{{ helperText }}</span>
+    <div class="form-control-helpers">
+      <div class="helper-text-container">
+        <span class="helper-text" *ngIf="helperText">{{ helperText }}</span>
+      </div>
     </div>
   </div>
 </fieldset>
