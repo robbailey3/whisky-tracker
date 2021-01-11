@@ -37,10 +37,6 @@
     <span *ngIf="input.errors.maxlength" class="form-error">
       {{ name }} must be at most {{ maxLength }} characters long.
     </span>
-    <span *ngIf="input.errors.email" class="form-error">
-      {{ name }} should be a correctly formatted email (e.g.
-      bob.jones@fakemail.com).
-    </span>
     <span *ngIf="input.errors.maxWordCount" class="form-error">
       {{ name }} should not exceed {{ maxWordCount }} words.
     </span>

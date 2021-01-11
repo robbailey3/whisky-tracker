@@ -33,13 +33,13 @@ export class TextareaComponent {
 
   @Input() required: boolean;
 
-  @Input() rows: number;
+  @Input() rows = 20;
 
-  @Input() cols: number;
+  @Input() cols = 20;
 
   public disabled = false;
 
-  public value: string;
+  public value = '';
 
   public wordCount = 0;
 
@@ -48,8 +48,10 @@ export class TextareaComponent {
   public onTouched: () => any;
 
   public writeValue(value: string) {
+    console.log('WRITING VALUE');
+    console.log(value);
     this.value = value;
-    this.wordCount = value.split(/\s/gm).length;
+    this.wordCount = value ? value.split(/\s/gm).length : 0;
   }
 
   public registerOnChange(fn: any) {
@@ -65,8 +67,7 @@ export class TextareaComponent {
   }
 
   public change() {
-    this.wordCount = this.value.split(/\s/gm).length;
-    console.log(this.wordCount);
+    this.wordCount = this.value ? this.value.split(/\s/gm).length : 0;
     this.onChange(this.value);
   }
 }

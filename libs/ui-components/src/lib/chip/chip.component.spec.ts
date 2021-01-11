@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ButtonsModule } from '../buttons/buttons.module';
 
 import { ChipComponent } from './chip.component';
 
@@ -8,9 +9,9 @@ describe('ChipComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChipComponent ]
-    })
-    .compileComponents();
+      declarations: [ChipComponent],
+      imports: [ButtonsModule]
+    }).compileComponents();
   });
 
   beforeEach(() => {

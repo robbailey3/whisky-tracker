@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { WordCountDirective } from '../validators/word-count.directive';
 
 import { TextareaComponent } from './textarea.component';
 
@@ -8,9 +10,9 @@ describe('TextareaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TextareaComponent ]
-    })
-    .compileComponents();
+      declarations: [TextareaComponent, WordCountDirective],
+      imports: [FormsModule]
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ButtonsModule } from '../../buttons/buttons.module';
+
+import { NotificationComponent } from '../notification/notification.component';
 
 import { NotificationContainerComponent } from './notification-container.component';
 
@@ -8,9 +11,9 @@ describe('NotificationContainerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NotificationContainerComponent ]
-    })
-    .compileComponents();
+      declarations: [NotificationContainerComponent, NotificationComponent],
+      imports: [ButtonsModule]
+    }).compileComponents();
   });
 
   beforeEach(() => {

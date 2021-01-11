@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 
 import { RadioButtonComponent } from './radio-button.component';
 
@@ -8,9 +9,9 @@ describe('RadioButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RadioButtonComponent ]
-    })
-    .compileComponents();
+      declarations: [RadioButtonComponent],
+      imports: [FormsModule]
+    }).compileComponents();
   });
 
   beforeEach(() => {

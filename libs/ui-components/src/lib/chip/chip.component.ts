@@ -3,7 +3,6 @@ import {
   EventEmitter,
   Input,
   Output,
-  OnInit,
   ViewEncapsulation
 } from '@angular/core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +13,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./chip.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ChipComponent implements OnInit {
+export class ChipComponent {
   public faTimes = faTimes;
 
   @Input() title: string;
@@ -29,10 +28,6 @@ export class ChipComponent implements OnInit {
     | 'black-pearl';
 
   @Output() handleDismiss: EventEmitter<void> = new EventEmitter();
-
-  ngOnInit() {
-    console.log(this);
-  }
 
   public onDismissClick() {
     this.handleDismiss.emit();
