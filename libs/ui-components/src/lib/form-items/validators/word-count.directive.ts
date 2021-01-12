@@ -13,11 +13,14 @@ import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
   ]
 })
 export class WordCountDirective implements Validator {
-  @Input('robWordCount') wordCountLimit: number = 10000;
+  @Input('robWordCount') wordCountLimit: number;
 
   constructor(private readonly el: ElementRef) {}
 
   public validate(control: FormControl) {
+    if (this.wordCountLimit === undefined) {
+      throw Error('wordCountLimit has not been provided to WordCountDirective');
+    }
     if (control.value && typeof control.value === 'string') {
       if (control.value.split(/\s/gm).length > this.wordCountLimit) {
         return { maxWordCount: true };

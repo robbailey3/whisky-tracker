@@ -1,5 +1,5 @@
-import { Component, forwardRef, Input } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, forwardRef, Input, ViewChild } from '@angular/core';
+import { NG_VALUE_ACCESSOR, FormControl, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'rob-textarea',
@@ -48,8 +48,6 @@ export class TextareaComponent {
   public onTouched: () => any;
 
   public writeValue(value: string) {
-    console.log('WRITING VALUE');
-    console.log(value);
     this.value = value;
     this.wordCount = value ? value.split(/\s/gm).length : 0;
   }
