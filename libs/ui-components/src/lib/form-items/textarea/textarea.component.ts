@@ -43,9 +43,9 @@ export class TextareaComponent {
 
   public wordCount = 0;
 
-  public onChange: (value: string) => any;
-
   public onTouched: () => any;
+
+  public onChange: (value: string) => any = () => null;
 
   public writeValue(value: string) {
     this.value = value;
