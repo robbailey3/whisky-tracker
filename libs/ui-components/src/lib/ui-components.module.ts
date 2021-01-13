@@ -10,6 +10,7 @@ import { TooltipComponent } from './tooltip/tooltip.component';
 import { AccordionModule } from './accordion/accordion.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { CardComponent } from './card/card.component';
+import { TooltipDirective } from './tooltip/tooltip.directive';
 
 @NgModule({
   imports: [CommonModule, ButtonsModule, FontAwesomeModule, FormItemsModule],
@@ -22,9 +23,16 @@ import { CardComponent } from './card/card.component';
     ChipComponent,
     FormItemsModule,
     ModalComponent,
-    CardComponent
+    CardComponent,
+    TooltipDirective
   ],
   providers: [NotificationsService],
-  declarations: [ModalComponent, ChipComponent, TooltipComponent, CardComponent]
+  declarations: [
+    ModalComponent,
+    ChipComponent,
+    TooltipComponent,
+    CardComponent,
+    TooltipDirective
+  ]
 })
 export class UiComponentsModule {}

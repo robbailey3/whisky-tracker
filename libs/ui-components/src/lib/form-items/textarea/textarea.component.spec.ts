@@ -52,8 +52,8 @@ describe('TextareaComponent', () => {
     textarea = hostFixture.debugElement.nativeElement.querySelector(
       'rob-textarea textarea'
     );
-    textareaComponent = hostComponent.textArea;
     hostFixture.detectChanges();
+    textareaComponent = hostComponent.textArea;
     changeSpy = jest.spyOn(hostComponent.textArea, 'change');
   });
 
