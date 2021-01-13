@@ -1,14 +1,14 @@
 import * as bcrypt from 'bcrypt';
-import { UserDto } from './dto/user.dto';
-import { DatabaseService } from '../shared/database/database.service';
 import {
   FilterQuery,
   FindOneOptions,
   UpdateOneOptions,
-  UpdateQuery,
+  UpdateQuery
 } from 'mongodb';
 import { Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
+import { DatabaseService } from '../shared/database/database.service';
+import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UserService {

@@ -29,28 +29,34 @@ import {
   UpdateQuery,
   UpdateWriteOpResult,
   IndexOptions,
-  IndexSpecification,
+  IndexSpecification
 } from 'mongodb';
 
 @Injectable()
 export class DatabaseService implements OnModuleInit {
   private client: MongoClient;
+
   private db: Db;
+
   private collection: Collection;
+
   private DB_URL: string;
+
   constructor(private readonly configService: ConfigService) {
     this.DB_URL = this.configService.get<string>('DB_URL');
     console.log(this.DB_URL);
   }
+
   public onModuleInit() {
     this.connect();
   }
+
   private connect(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       MongoClient.connect(this.DB_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        connectTimeoutMS: 10000,
+        connectTimeoutMS: 10000
       })
         .then((client: MongoClient) => {
           Logger.log('Connected to database', DatabaseService.name);
@@ -231,7 +237,7 @@ export class DatabaseService implements OnModuleInit {
           const hash = await bcrypt.hash(password, 12);
           this.collection.insertOne({
             email,
-            password: hash,
+            password: hash
           });
         }
       });

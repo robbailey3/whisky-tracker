@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NavigationComponent } from '../navigation/navigation.component';
 
 import { HeaderComponent } from './header.component';
 
@@ -8,9 +10,9 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
-    })
-    .compileComponents();
+      declarations: [HeaderComponent, NavigationComponent],
+      imports: [RouterTestingModule]
+    }).compileComponents();
   });
 
   beforeEach(() => {
