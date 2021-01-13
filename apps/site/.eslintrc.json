@@ -10,6 +10,7 @@
       ],
       "parserOptions": { "project": ["apps/site/tsconfig.*?.json"] },
       "rules": {
+        "import/extensions": [0],
         "@angular-eslint/directive-selector": [
           "error",
           {
@@ -27,11 +28,6 @@
           }
         ]
       }
-    },
-    {
-      "files": ["*.html"],
-      "extends": ["plugin:@nrwl/nx/angular-template"],
-      "rules": {}
     }
   ]
 }
