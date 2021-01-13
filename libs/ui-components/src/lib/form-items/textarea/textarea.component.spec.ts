@@ -24,14 +24,15 @@ import { TextareaComponent } from './textarea.component';
 class TestTextAreaComponent {
   @ViewChild(TextareaComponent) public textArea: TextareaComponent;
 
-  public textAreaFormControl = new FormControl('');
+  public textAreaFormControl = new FormControl('Test');
 }
 
 describe('TextareaComponent', () => {
   let hostComponent: TestTextAreaComponent;
   let hostFixture: ComponentFixture<TestTextAreaComponent>;
-  let spy: jest.SpyInstance;
-  let textArea: DebugElement;
+  let changeSpy: jest.SpyInstance;
+  let textareaComponent: TextareaComponent;
+  let textarea;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -48,18 +49,27 @@ describe('TextareaComponent', () => {
   beforeEach(() => {
     hostFixture = TestBed.createComponent(TestTextAreaComponent);
     hostComponent = hostFixture.componentInstance;
-    textArea = hostFixture.debugElement.query(By.css('rob-textarea'));
+    textarea = hostFixture.debugElement.nativeElement.querySelector(
+      'rob-textarea textarea'
+    );
+    textareaComponent = hostComponent.textArea;
     hostFixture.detectChanges();
-    spy = jest.spyOn(hostComponent.textArea, 'change');
+    changeSpy = jest.spyOn(hostComponent.textArea, 'change');
   });
 
   it('should create', () => {
-    expect(hostComponent.textArea).toBeTruthy();
+    expect(textareaComponent).toBeTruthy();
   });
 
-  it('should', fakeAsync(() => {
-    const input = textArea.query(By.css('textarea'));
-    input.triggerEventHandler('input', {});
-    expect(spy).toHaveBeenCalled();
-  }));
+  it('should update the value when the ngModel changes', () => {
+    hostComponent.textAreaFormControl.patchValue('Foo');
+    hostFixture.detectChanges();
+    expect(hostComponent.textArea.value).toEqual('Foo');
+  });
+
+  it('should run the change function when the input event is fired from the textarea', () => {
+    textarea.dispatchEvent(new Event('input'));
+    hostFixture.detectChanges();
+    expect(changeSpy).toHaveBeenCalled();
+  });
 });
