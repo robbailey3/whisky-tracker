@@ -1,51 +1,65 @@
-import { forwardRef } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, DebugElement, ViewChild } from '@angular/core';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick
+} from '@angular/core/testing';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { WordCountDirective } from '../validators/word-count.directive';
 
 import { TextareaComponent } from './textarea.component';
 
+@Component({
+  template: `<form #form="ngForm">
+    <rob-textarea
+      maxWordCount="200"
+      name="textAreaValue"
+      [formControl]="textAreaFormControl"
+    ></rob-textarea>
+  </form>`,
+  selector: 'rob-test-textarea'
+})
+class TestTextAreaComponent {
+  @ViewChild(TextareaComponent) public textArea: TextareaComponent;
+
+  public textAreaFormControl = new FormControl('');
+}
+
 describe('TextareaComponent', () => {
-  let component: TextareaComponent;
-  let fixture: ComponentFixture<TextareaComponent>;
-  let emitValueSpy: jest.SpyInstance;
-  let textarea: HTMLTextAreaElement;
+  let hostComponent: TestTextAreaComponent;
+  let hostFixture: ComponentFixture<TestTextAreaComponent>;
+  let spy: jest.SpyInstance;
+  let textArea: DebugElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TextareaComponent, WordCountDirective],
-      imports: [FormsModule]
+      declarations: [
+        TestTextAreaComponent,
+        TextareaComponent,
+        WordCountDirective
+      ],
+
+      imports: [ReactiveFormsModule, FormsModule]
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TextareaComponent);
-    component = fixture.componentInstance;
-    component.maxWordCount = 500;
-    emitValueSpy = jest.spyOn(component, 'change');
-    textarea = fixture.nativeElement.querySelector('textarea');
-    fixture.detectChanges();
+    hostFixture = TestBed.createComponent(TestTextAreaComponent);
+    hostComponent = hostFixture.componentInstance;
+    textArea = hostFixture.debugElement.query(By.css('rob-textarea'));
+    hostFixture.detectChanges();
+    spy = jest.spyOn(hostComponent.textArea, 'change');
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(hostComponent.textArea).toBeTruthy();
   });
 
-  it('should update the ngModel when the value changes', () => {
-    const de = fixture.debugElement.query(By.css('textarea'));
-    const el = de.nativeElement;
-
-    fixture.detectChanges();
-
-    el.value = 'My string';
-
-    const event = new Event('input', {
-      bubbles: true,
-      cancelable: true
-    });
-    el.dispatchEvent(event);
-
-    expect(emitValueSpy).toHaveBeenCalled();
-  });
+  it('should', fakeAsync(() => {
+    const input = textArea.query(By.css('textarea'));
+    input.triggerEventHandler('input', {});
+    expect(spy).toHaveBeenCalled();
+  }));
 });
