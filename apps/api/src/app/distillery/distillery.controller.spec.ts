@@ -1,13 +1,9 @@
-import { DistilleryService } from './distillery.service';
+import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { DistilleryController } from './distillery.controller';
 
-class MockDistilleryService {
-  public getMany: () => void;
-  constructor() {
-    this.getMany = jest.fn();
-  }
-}
+import { DistilleryService } from './distillery.service';
+import { DistilleryController } from './distillery.controller';
+import { DatabaseService } from '../shared/database/database.service';
 
 describe('DistilleryController', () => {
   let controller: DistilleryController;
@@ -18,9 +14,9 @@ describe('DistilleryController', () => {
       providers: [
         {
           provide: DistilleryService,
-          useClass: MockDistilleryService,
-        },
-      ],
+          useFactory: () => class MockDistilleryService {}
+        }
+      ]
     }).compile();
 
     controller = module.get<DistilleryController>(DistilleryController);
@@ -28,10 +24,5 @@ describe('DistilleryController', () => {
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
-  });
-
-  it('should call DistilleryService->GetMany', () => {
-    controller.getMany();
-    expect(MockDistilleryService.prototype.getMany).toHaveBeenCalled();
   });
 });

@@ -1,4 +1,6 @@
+import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
+import { DatabaseService } from '../shared/database/database.service';
 import { WhiskyService } from './whisky.service';
 
 describe('WhiskyService', () => {
@@ -6,7 +8,7 @@ describe('WhiskyService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [WhiskyService],
+      providers: [WhiskyService, DatabaseService, ConfigService]
     }).compile();
 
     service = module.get<WhiskyService>(WhiskyService);

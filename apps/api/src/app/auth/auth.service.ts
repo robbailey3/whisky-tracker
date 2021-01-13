@@ -1,10 +1,10 @@
-import { UserService } from './../user/user.service';
 import * as bcrypt from 'bcrypt';
-import { LoginDto } from './dto/login.dto';
-import { UserDto } from '../user/dto/user.dto';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { FindAndModifyWriteOpResultObject } from 'mongodb';
+import { UserDto } from '../user/dto/user.dto';
+import { LoginDto } from './dto/login.dto';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -37,7 +37,7 @@ export class AuthService {
         },
         error: (err) => {
           reject(err);
-        },
+        }
       });
     });
   }
@@ -65,13 +65,13 @@ export class AuthService {
             const payload = { email: userFromDB.email, id: userFromDB._id };
             resolve({
               token: this.jwtService.sign(payload, {
-                expiresIn: '1h',
-              }),
+                expiresIn: '1h'
+              })
             });
           },
           error: (err) => {
             reject(err);
-          },
+          }
         });
     });
   }
