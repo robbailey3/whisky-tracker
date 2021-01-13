@@ -1,1 +1,8 @@
-<p>tooltip works!</p>
+<span
+  class="tooltip absolute"
+  [ngStyle]="{
+    top: config.host.getBoundingClientRect().y - 32 + 'px',
+    left: config.host.getBoundingClientRect().x - 32 + 'px'
+  }"
+  >{{ config.content }}</span
+>

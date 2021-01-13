@@ -41,8 +41,10 @@ export class TooltipDirective {
   @HostListener('mouseleave')
   public handleMouseLeave() {
     clearTimeout(this.timeout);
-    this.componentRef.destroy();
-    this.componentRef = null;
+    if (false) {
+      this.componentRef.destroy();
+      this.componentRef = null;
+    }
   }
 
   private create() {
@@ -56,7 +58,8 @@ export class TooltipDirective {
             provide: 'tooltipConfig',
             useValue: {
               host: this.el.nativeElement,
-              position: this.tooltipPosition
+              position: this.tooltipPosition,
+              content: this.tooltipText
             }
           }
         ]
