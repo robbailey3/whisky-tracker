@@ -1,4 +1,3 @@
-import { TooltipComponent } from './tooltip.component';
 import {
   Directive,
   Input,
@@ -7,15 +6,15 @@ import {
   ComponentRef,
   ComponentFactoryResolver,
   Injector,
-  Renderer2,
   ViewContainerRef,
-  ReflectiveInjector
+  OnDestroy
 } from '@angular/core';
+import { TooltipComponent } from './tooltip.component';
 
 @Directive({
   selector: '[robTooltip]'
 })
-export class TooltipDirective {
+export class TooltipDirective implements OnDestroy {
   @Input('robTooltip') tooltipText = '';
 
   @Input() tooltipPosition: 'top' | 'bottom' | 'left' | 'right';
@@ -28,7 +27,6 @@ export class TooltipDirective {
 
   constructor(
     private readonly el: ElementRef,
-    private renderer: Renderer2,
     private resolver: ComponentFactoryResolver,
     private vcr: ViewContainerRef
   ) {}
@@ -41,14 +39,10 @@ export class TooltipDirective {
   @HostListener('mouseleave')
   public handleMouseLeave() {
     clearTimeout(this.timeout);
-    if (false) {
-      this.componentRef.destroy();
-      this.componentRef = null;
-    }
+    this.destroy();
   }
 
   private create() {
-    console.log(this);
     if (this.componentRef) return;
     setTimeout(() => {
       const factory = this.resolver.resolveComponentFactory(TooltipComponent);
@@ -58,7 +52,7 @@ export class TooltipDirective {
             provide: 'tooltipConfig',
             useValue: {
               host: this.el.nativeElement,
-              position: this.tooltipPosition,
+              position: this.tooltipPosition || 'top',
               content: this.tooltipText
             }
           }
@@ -66,5 +60,16 @@ export class TooltipDirective {
       });
       this.componentRef = this.vcr.createComponent(factory, 0, injector);
     }, this.delay);
+  }
+
+  private destroy() {
+    if (this.componentRef) {
+      this.componentRef.destroy();
+      this.componentRef = null;
+    }
+  }
+
+  public ngOnDestroy() {
+    this.destroy();
   }
 }

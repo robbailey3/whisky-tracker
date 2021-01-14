@@ -43,20 +43,20 @@ export class TextareaComponent {
 
   public wordCount = 0;
 
-  public onTouched: () => any;
+  public onTouched: () => unknown;
 
-  public onChange: (value: string) => any;
+  public onChange: (value: string) => unknown;
 
   public writeValue(value: string) {
     this.value = value;
     this.wordCount = value ? value.split(/\s/gm).length : 0;
   }
 
-  public registerOnChange(fn: any) {
+  public registerOnChange(fn: () => unknown) {
     this.onChange = fn;
   }
 
-  public registerOnTouched(fn: any) {
+  public registerOnTouched(fn: () => unknown) {
     this.onTouched = fn;
   }
 
@@ -65,7 +65,6 @@ export class TextareaComponent {
   }
 
   public change() {
-    console.log('CHANGE HAS BEEN CALLED');
     this.wordCount = this.value ? this.value.split(/\s/gm).length : 0;
     this.onChange(this.value);
   }

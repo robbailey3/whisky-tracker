@@ -1,8 +1,8 @@
 <span
-  class="tooltip absolute"
-  [ngStyle]="{
-    top: config.host.getBoundingClientRect().y - 32 + 'px',
-    left: config.host.getBoundingClientRect().x - 32 + 'px'
-  }"
+  #tooltipElement
+  class="tooltip"
+  [@fadeInOnEnter]
+  [@fadeOutOnLeave]
+  [ngClass]="{ 'tooltip-top': config.position === 'top' }"
   >{{ config.content }}</span
 >

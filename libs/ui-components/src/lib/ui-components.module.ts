@@ -1,7 +1,8 @@
-import { NotificationsService } from './notifications/notifications.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NotificationsService } from './notifications/notifications.service';
 import { FormItemsModule } from './form-items/form-items.module';
 import { ButtonsModule } from './buttons/buttons.module';
 import { ModalComponent } from './modal/modal.component';
@@ -13,10 +14,17 @@ import { CardComponent } from './card/card.component';
 import { TooltipDirective } from './tooltip/tooltip.directive';
 
 @NgModule({
-  imports: [CommonModule, ButtonsModule, FontAwesomeModule, FormItemsModule],
+  imports: [
+    CommonModule,
+    BrowserAnimationsModule,
+    ButtonsModule,
+    FontAwesomeModule,
+    FormItemsModule
+  ],
   exports: [
     AccordionModule,
     ButtonsModule,
+    BrowserAnimationsModule,
     FontAwesomeModule,
     FormItemsModule,
     NotificationsModule,
