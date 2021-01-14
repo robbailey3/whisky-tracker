@@ -6,10 +6,10 @@ import {
   ApiTags
 } from '@nestjs/swagger';
 import { Controller, Get, Param, Query } from '@nestjs/common';
+import { ObjectID } from 'mongodb';
 import { WhiskyDto } from './dto/whisky.dto';
 import { EntityQuery } from '../shared/entity-query/entity-query';
 import { WhiskyService } from './whisky.service';
-import { ObjectID } from 'mongodb';
 
 @Controller('whisky')
 @ApiTags('Whisky')

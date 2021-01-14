@@ -5,7 +5,8 @@ import {
   UpdateOneOptions,
   UpdateQuery,
 } from 'mongodb';
-import { DatabaseService } from './../database/database.service';
+import { DatabaseService } from "../database/database.service";
+
 export abstract class EntityService {
   constructor(
     private readonly database: DatabaseService,

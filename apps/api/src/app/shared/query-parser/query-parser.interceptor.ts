@@ -1,4 +1,3 @@
-import { EntityQuery } from './../entity-query/entity-query';
 import {
   CallHandler,
   ExecutionContext,
@@ -8,6 +7,7 @@ import {
 import { MongooseQueryParser } from 'mongoose-query-parser';
 import { Observable } from 'rxjs';
 import { Request } from 'express';
+import { EntityQuery } from "../entity-query/entity-query";
 
 @Injectable()
 export class QueryParserInterceptor implements NestInterceptor {

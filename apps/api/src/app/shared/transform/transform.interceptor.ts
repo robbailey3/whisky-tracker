@@ -27,11 +27,11 @@ export class TransformInterceptor<T>
           timestamp: Date.now(),
           count: Array.isArray(results) ? results.length : results ? 1 : 0,
         };
-        return Object.assign(
-          {},
-          common,
-          Array.isArray(results) ? { results } : { result: results }
-        );
+        return {
+          
+          ...common,
+          ...(Array.isArray(results) ? { results } : { result: results })
+        };
       })
     );
   }
