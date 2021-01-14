@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TooltipComponent } from './tooltip.component';
@@ -8,9 +9,19 @@ describe('TooltipComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TooltipComponent ]
-    })
-    .compileComponents();
+      imports: [BrowserAnimationsModule],
+      declarations: [TooltipComponent],
+      providers: [
+        {
+          provide: 'tooltipConfig',
+          useValue: {
+            host: document.createElement('div'),
+            position: 'top',
+            content: ''
+          }
+        }
+      ]
+    }).compileComponents();
   });
 
   beforeEach(() => {
