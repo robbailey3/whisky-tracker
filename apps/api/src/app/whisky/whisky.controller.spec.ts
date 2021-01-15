@@ -7,7 +7,7 @@ jest.mock('./whisky.service');
 
 describe('WhiskyController', () => {
   let controller: WhiskyController;
-
+  let whiskyService: WhiskyService;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [WhiskyController],
@@ -15,30 +15,31 @@ describe('WhiskyController', () => {
     }).compile();
 
     controller = module.get<WhiskyController>(WhiskyController);
+    whiskyService = module.get<WhiskyService>(WhiskyService);
   });
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
 
-  describe('[METHOD]: getMany', () => {
-    it('should have a getMany method', () => {
-      expect(controller.getMany).toBeDefined();
+  describe('[METHOD]: find', () => {
+    it('should have a find method', () => {
+      expect(controller.find).toBeDefined();
     });
-    it('should call whiskyService->getMany when called', () => {
-      const spy = jest.spyOn(WhiskyService.prototype, 'getMany');
-      controller.getMany({ filter: {}, sort: {}, skip: 0, limit: 100 });
+    it('should call whiskyService->find when called', () => {
+      const spy = jest.spyOn(whiskyService, 'find');
+      controller.find({ filter: {}, sort: {}, skip: 0, limit: 100 });
       expect(spy).toHaveBeenCalled();
     });
   });
 
-  describe('[METHOD]: getOne', () => {
-    it('should have a getMany method', () => {
-      expect(controller.getOne).toBeDefined();
+  describe('[METHOD]: findOne', () => {
+    it('should have a findOne method', () => {
+      expect(controller.findOne).toBeDefined();
     });
-    it('should call whiskyService->getMany when called', () => {
-      const spy = jest.spyOn(WhiskyService.prototype, 'getOne');
-      controller.getOne(new ObjectID().toHexString());
+    it('should call whiskyService->findOne when called', () => {
+      const spy = jest.spyOn(whiskyService, 'findOne');
+      controller.findOne(new ObjectID().toHexString());
       expect(spy).toHaveBeenCalled();
     });
   });

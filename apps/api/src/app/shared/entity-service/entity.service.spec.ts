@@ -1,6 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import { Injectable } from '@nestjs/common';
 import { TestingModule, Test } from '@nestjs/testing';
+import { Observable } from 'rxjs';
 import { DatabaseService } from '../database/database.service';
 import { EntityService } from './entity.service';
 
@@ -37,7 +38,15 @@ describe('[SERVICE]: EntityService', () => {
   describe('[METHOD]: getMany', () => {
     it('should call databaseService->find', () => {
       const spy: jest.SpyInstance = jest.spyOn(databaseService, 'find');
-      service.getMany({});
+      service.find({});
+      expect(spy).toHaveBeenCalled();
+    });
+  });
+
+  describe('[METHOD]: getOne', () => {
+    it('should call databaseService->findOne', () => {
+      const spy = jest.spyOn(databaseService, 'findOne');
+      service.findOne({});
       expect(spy).toHaveBeenCalled();
     });
   });

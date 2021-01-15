@@ -12,11 +12,11 @@ export class DistilleryController {
 
   @Get('')
   @ApiQuery({ type: EntityQuery })
-  getMany(
+  find(
     @Query() query: EntityQuery<DistilleryDto>
   ): Observable<DistilleryDto[]> {
     const { filter, ...options } = query;
     console.log(JSON.stringify(filter), JSON.stringify(options));
-    return this.distilleryService.getMany(filter, options);
+    return this.distilleryService.find(filter, options);
   }
 }

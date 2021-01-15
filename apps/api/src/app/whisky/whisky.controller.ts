@@ -28,9 +28,9 @@ export class WhiskyController {
     description: 'An array of whiskies which match the given query',
     type: [WhiskyDto]
   })
-  public getMany(@Query() query: EntityQuery<WhiskyDto>) {
+  public find(@Query() query: EntityQuery<WhiskyDto>) {
     const { filter, ...options } = query;
-    return this.whiskyService.getMany(filter, options);
+    return this.whiskyService.find(filter, options);
   }
 
   @Get(':id')
@@ -47,8 +47,8 @@ export class WhiskyController {
     type: String,
     description: 'The ID of the single whisky to retrieve'
   })
-  public getOne(@Param('id') _id: string) {
-    return this.whiskyService.getOne(
+  public findOne(@Param('id') _id: string) {
+    return this.whiskyService.findOne(
       { _id: ObjectID.createFromHexString(_id) },
       {}
     );

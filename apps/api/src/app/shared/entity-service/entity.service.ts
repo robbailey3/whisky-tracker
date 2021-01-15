@@ -12,11 +12,9 @@ export abstract class EntityService {
   constructor(
     private readonly database: DatabaseService,
     private readonly collectionName: string
-  ) {
-    console.log(this.getMany);
-  }
+  ) {}
 
-  public getMany<T>(
+  public find<T>(
     query: FilterQuery<T>,
     options: FindOneOptions<T extends any ? any : T> = {}
   ) {
@@ -25,9 +23,9 @@ export abstract class EntityService {
       .find<T>(query, options);
   }
 
-  public getOne<T>(
+  public findOne<T>(
     query: FilterQuery<T>,
-    options: FindOneOptions<T extends any ? any : T>
+    options: FindOneOptions<T extends any ? any : T> = {}
   ) {
     return this.database
       .setCollection(this.collectionName)
