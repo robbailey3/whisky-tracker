@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DatabaseService } from "../shared/database/database.service";
+import { DatabaseService } from '../shared/database/database.service';
 import { EntityService } from '../shared/entity-service/entity.service';
 
 @Injectable()

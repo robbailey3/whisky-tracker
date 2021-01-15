@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
-import { from, Observable, Subscriber } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { map } from 'rxjs/operators';
 import {
@@ -62,7 +62,7 @@ export class DatabaseService implements OnModuleInit {
           Logger.log('Connected to database', DatabaseService.name);
           this.client = client;
           this.db = this.client.db();
-          this.setupInitialUser();
+          // this.setupInitialUser();
           resolve();
         })
         .catch((err: Error) => {
@@ -199,6 +199,7 @@ export class DatabaseService implements OnModuleInit {
   }
 
   public mapReduce<TSchema, Tkey, TValue>(
+    // eslint-disable-next-line no-shadow
     map: string | CollectionMapFunction<TSchema>,
     reduce: string | CollectionReduceFunction<Tkey, TValue>,
     options: MapReduceOptions = {}

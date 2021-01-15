@@ -42,4 +42,21 @@ describe('WhiskyController', () => {
       expect(spy).toHaveBeenCalled();
     });
   });
+
+  describe('[METHOD]: insertOne', () => {
+    const spy = jest.spyOn(WhiskyService.prototype, 'insertOne');
+    it('should be defined', () => {
+      expect(controller.insertOne).toBeDefined();
+    });
+
+    it('should call whiskyService->insertOne', () => {
+      controller.insertOne({});
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('should pass the body parameter', () => {
+      controller.insertOne({ name: 'Name' });
+      expect(spy).toHaveBeenCalledWith({ name: 'Name' });
+    });
+  });
 });

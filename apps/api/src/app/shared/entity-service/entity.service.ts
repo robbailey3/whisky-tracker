@@ -1,17 +1,20 @@
 import {
   CollectionInsertOneOptions,
+  CommonOptions,
   FilterQuery,
   FindOneOptions,
   UpdateOneOptions,
-  UpdateQuery,
+  UpdateQuery
 } from 'mongodb';
-import { DatabaseService } from "../database/database.service";
+import { DatabaseService } from '../database/database.service';
 
 export abstract class EntityService {
   constructor(
     private readonly database: DatabaseService,
     private readonly collectionName: string
-  ) {}
+  ) {
+    console.log(this.getMany);
+  }
 
   public getMany<T>(
     query: FilterQuery<T>,
@@ -48,5 +51,11 @@ export abstract class EntityService {
     return this.database
       .setCollection(this.collectionName)
       .updateOne(filter, updatedDocument, options);
+  }
+
+  public deleteOne<T>(filter: FilterQuery<T>, options: CommonOptions = {}) {
+    return this.database
+      .setCollection(this.collectionName)
+      .deleteOne<T>(filter, options);
   }
 }

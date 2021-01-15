@@ -1,11 +1,12 @@
 import {
+  ApiBody,
   ApiOkResponse,
   ApiOperation,
   ApiParam,
   ApiQuery,
   ApiTags
 } from '@nestjs/swagger';
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ObjectID } from 'mongodb';
 import { WhiskyDto } from './dto/whisky.dto';
 import { EntityQuery } from '../shared/entity-query/entity-query';
@@ -27,7 +28,7 @@ export class WhiskyController {
     description: 'An array of whiskies which match the given query',
     type: [WhiskyDto]
   })
-  getMany(@Query() query: EntityQuery<WhiskyDto>) {
+  public getMany(@Query() query: EntityQuery<WhiskyDto>) {
     const { filter, ...options } = query;
     return this.whiskyService.getMany(filter, options);
   }
@@ -46,10 +47,19 @@ export class WhiskyController {
     type: String,
     description: 'The ID of the single whisky to retrieve'
   })
-  getOne(@Param('id') _id: string) {
+  public getOne(@Param('id') _id: string) {
     return this.whiskyService.getOne(
       { _id: ObjectID.createFromHexString(_id) },
       {}
     );
+  }
+
+  @Post('')
+  @ApiBody({
+    description: 'The new Whisky to add to the database',
+    required: true
+  })
+  public insertOne(@Body() body: Partial<WhiskyDto>) {
+    return this.whiskyService.insertOne(body);
   }
 }

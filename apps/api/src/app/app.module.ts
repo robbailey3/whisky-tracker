@@ -11,12 +11,13 @@ import { DistilleryModule } from './distillery/distillery.module';
     AuthModule,
     SharedModule,
     ConfigModule.forRoot({
+      cache: false,
       isGlobal: true,
-      envFilePath: process.env.NODE_ENV === 'production' ? '.env' : '.dev.env',
+      envFilePath: process.env.NODE_ENV === 'production' ? '.env' : '.dev.env'
     }),
     UserModule,
     WhiskyModule,
-    DistilleryModule,
-  ],
+    DistilleryModule
+  ]
 })
 export class AppModule {}
