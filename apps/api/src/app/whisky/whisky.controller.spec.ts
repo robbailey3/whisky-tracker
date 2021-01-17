@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import { ObjectID } from 'mongodb';
 import { Test, TestingModule } from '@nestjs/testing';
 import { WhiskyController } from './whisky.controller';
@@ -7,7 +8,7 @@ jest.mock('./whisky.service');
 
 describe('WhiskyController', () => {
   let controller: WhiskyController;
-  let whiskyService: WhiskyService;
+  let service: WhiskyService;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [WhiskyController],
@@ -15,7 +16,7 @@ describe('WhiskyController', () => {
     }).compile();
 
     controller = module.get<WhiskyController>(WhiskyController);
-    whiskyService = module.get<WhiskyService>(WhiskyService);
+    service = module.get<WhiskyService>(WhiskyService);
   });
 
   it('should be defined', () => {
@@ -27,20 +28,42 @@ describe('WhiskyController', () => {
       expect(controller.find).toBeDefined();
     });
     it('should call whiskyService->find when called', () => {
-      const spy = jest.spyOn(whiskyService, 'find');
+      const spy = jest.spyOn(service, 'find');
       controller.find({ filter: {}, sort: {}, skip: 0, limit: 100 });
       expect(spy).toHaveBeenCalled();
     });
   });
 
   describe('[METHOD]: findOne', () => {
+    let validID;
+    let spy;
+    const invalidID = 'invalid_id';
+    beforeEach(() => {
+      validID = new ObjectID().toHexString();
+      spy = jest.spyOn(service, 'findOne');
+    });
     it('should have a findOne method', () => {
       expect(controller.findOne).toBeDefined();
     });
+    it('should throw an error when an invalid ID is passed', () => {
+      expect(() => controller.findOne(invalidID)).toThrow(BadRequestException);
+    });
+
+    it('should not throw an error when a valid ID is provided', () => {
+      expect(() => controller.findOne(validID)).not.toThrow(
+        BadRequestException
+      );
+    });
+
     it('should call whiskyService->findOne when called', () => {
-      const spy = jest.spyOn(whiskyService, 'findOne');
-      controller.findOne(new ObjectID().toHexString());
+      controller.findOne(validID);
       expect(spy).toHaveBeenCalled();
+    });
+    it('should pass the ID parameter to the service', () => {
+      controller.findOne(validID);
+      expect(spy).toHaveBeenCalledWith({
+        _id: ObjectID.createFromHexString(validID)
+      });
     });
   });
 

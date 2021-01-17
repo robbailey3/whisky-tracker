@@ -6,7 +6,15 @@ import {
   ApiQuery,
   ApiTags
 } from '@nestjs/swagger';
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  BadRequestException
+} from '@nestjs/common';
 import { ObjectID } from 'mongodb';
 import { WhiskyDto } from './dto/whisky.dto';
 import { EntityQuery } from '../shared/entity-query/entity-query';
@@ -48,10 +56,12 @@ export class WhiskyController {
     description: 'The ID of the single whisky to retrieve'
   })
   public findOne(@Param('id') _id: string) {
-    return this.whiskyService.findOne(
-      { _id: ObjectID.createFromHexString(_id) },
-      {}
-    );
+    if (!ObjectID.isValid(_id)) {
+      throw new BadRequestException('Provided id must be a valid id');
+    }
+    return this.whiskyService.findOne({
+      _id: ObjectID.createFromHexString(_id)
+    });
   }
 
   @Post('')
