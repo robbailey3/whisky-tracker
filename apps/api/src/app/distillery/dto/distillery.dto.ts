@@ -1,7 +1,16 @@
-import { IsEmpty, IsNumber, IsString, ValidateNested } from 'class-validator';
+import {
+  IsEmpty,
+  IsEnum,
+  IsIn,
+  IsNumber,
+  IsString,
+  ValidateNested
+} from 'class-validator';
 import { ObjectID } from 'mongodb';
 import { ApiProperty } from '@nestjs/swagger';
 import { LocationDto } from '../../shared/dto/location.dto';
+
+const validCategories = ['Islay', 'Speyside', 'Highland'];
 
 export class DistilleryDto {
   @IsEmpty()
@@ -17,6 +26,7 @@ export class DistilleryDto {
   location: LocationDto;
 
   @ApiProperty({ name: 'category', type: String })
+  @IsIn(validCategories)
   @IsString()
   category: string;
 
