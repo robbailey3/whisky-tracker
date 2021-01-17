@@ -44,7 +44,6 @@ export class DatabaseService implements OnModuleInit {
 
   constructor(private readonly configService: ConfigService) {
     this.DB_URL = this.configService.get<string>('DB_URL');
-    console.log(this.DB_URL);
   }
 
   public onModuleInit() {
