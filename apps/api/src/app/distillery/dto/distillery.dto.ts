@@ -2,6 +2,7 @@ import {
   IsEmpty,
   IsEnum,
   IsIn,
+  IsInstance,
   IsNumber,
   IsString,
   ValidateNested
@@ -9,6 +10,7 @@ import {
 import { ObjectID } from 'mongodb';
 import { ApiProperty } from '@nestjs/swagger';
 import { LocationDto } from '../../shared/dto/location.dto';
+import { Type } from 'class-transformer';
 
 const validCategories = ['Islay', 'Speyside', 'Highland'];
 
@@ -22,6 +24,7 @@ export class DistilleryDto {
   name: string;
 
   @ApiProperty({ name: 'location', type: LocationDto })
+  @Type(() => LocationDto)
   @ValidateNested()
   location: LocationDto;
 
