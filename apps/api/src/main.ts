@@ -1,5 +1,9 @@
-import { Logger, ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import {
+  ClassSerializerInterceptor,
+  Logger,
+  ValidationPipe
+} from '@nestjs/common';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import * as compression from 'compression';
@@ -34,8 +38,11 @@ async function bootstrap() {
       whitelist: true
     })
   );
-  app.useGlobalInterceptors(new TransformInterceptor());
-  app.useGlobalInterceptors(new QueryParserInterceptor());
+  app.useGlobalInterceptors(
+    new TransformInterceptor(),
+    new ClassSerializerInterceptor(app.get(Reflector)),
+    new QueryParserInterceptor()
+  );
 
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);

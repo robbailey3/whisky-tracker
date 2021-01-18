@@ -3,13 +3,15 @@ import { Exclude, Type } from 'class-transformer';
 import {
   IsDate,
   IsEmail,
+  IsEmpty,
   IsNotEmpty,
   IsString,
-  MinLength,
+  MinLength
 } from 'class-validator';
 
 export class UserDto {
   @ApiProperty()
+  @IsEmpty()
   @Type(() => String)
   public _id: any;
 
@@ -33,14 +35,10 @@ export class UserDto {
   @IsNotEmpty()
   @MinLength(8)
   @ApiProperty()
-  @Exclude()
+  @Exclude({ toPlainOnly: true })
   public password: string;
 
-  @IsDate()
   @ApiProperty()
+  @IsEmpty()
   public lastLogIn: Date;
-
-  constructor(partial: Partial<UserDto>) {
-    Object.assign(this, partial);
-  }
 }

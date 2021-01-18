@@ -1,7 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { FindAndModifyWriteOpResultObject } from 'mongodb';
 import { UserDto } from '../user/dto/user.dto';
 import { LoginDto } from './dto/login.dto';
 import { UserService } from '../user/user.service';
@@ -20,7 +19,7 @@ export class AuthService {
    */
   public async validateUser(email: string, pass: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.userService.getOne({ email }).subscribe({
+      this.userService.findOne({ email }).subscribe({
         next: async (user: UserDto) => {
           if (!user || !user.password) {
             reject();
@@ -49,19 +48,20 @@ export class AuthService {
   public login(user: LoginDto): Promise<any> {
     return new Promise((resolve, reject) => {
       this.userService
-        .findAndUpdateOne(
+        .findOneAndUpdate<UserDto>(
           { email: user.email },
           { $set: { lastLogIn: new Date() } },
           { upsert: true }
         )
         .subscribe({
-          next: (result: FindAndModifyWriteOpResultObject<UserDto>) => {
-            const userFromDB = result.value;
+          next: (result: UserDto) => {
+            const userFromDB = result;
             if (!userFromDB) {
               // This shouldn't happen, but just in case.
               throw new UnauthorizedException('Login Failed');
             }
             // Create the JWT Payload
+            // eslint-disable-next-line no-underscore-dangle
             const payload = { email: userFromDB.email, id: userFromDB._id };
             resolve({
               token: this.jwtService.sign(payload, {

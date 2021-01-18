@@ -1,48 +1,28 @@
 import * as bcrypt from 'bcrypt';
-import {
-  FilterQuery,
-  FindOneOptions,
-  UpdateOneOptions,
-  UpdateQuery
-} from 'mongodb';
 import { Injectable } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { DatabaseService } from '../shared/database/database.service';
 import { UserDto } from './dto/user.dto';
+import { EntityService } from '../shared/entity-service/entity.service';
 
 @Injectable()
-export class UserService {
-  constructor(private db: DatabaseService) {}
-
-  public getAll<T>(
-    query: FilterQuery<any> = {},
-    options: FindOneOptions<any> = {}
-  ): Observable<T[]> {
-    return this.db.setCollection('users').find<T>(query, options);
+export class UserService extends EntityService {
+  constructor(database: DatabaseService) {
+    super(database, 'users');
   }
 
-  public getOne(
-    query: FilterQuery<any> = {},
-    options: FindOneOptions<any> = {}
-  ) {
-    return this.db.setCollection('users').findOne(query, options);
-  }
-
-  public async create(newUser: Partial<UserDto>): Promise<Partial<UserDto>> {
-    newUser.password = await bcrypt.hash(newUser.password, 12);
-    return await this.db
-      .setCollection('users')
-      .insertOne<Partial<UserDto>>(newUser)
-      .toPromise();
-  }
-
-  public findAndUpdateOne(
-    selector: FilterQuery<any>,
-    updateOperation: UpdateQuery<UserDto>,
-    options: UpdateOneOptions = {}
-  ) {
-    return this.db
-      .setCollection('users')
-      .findOneAndUpdate(selector, updateOperation, options);
+  public insertUser(newUser: UserDto): Observable<UserDto> {
+    return from(bcrypt.hash(newUser.password, 12)).pipe(
+      switchMap((hashedPassword) => {
+        const userWithoutPassword = { password: hashedPassword, ...newUser };
+        const user = {
+          password: hashedPassword,
+          ...userWithoutPassword
+        } as UserDto;
+        console.log(user);
+        return super.insertOne<UserDto>(user);
+      })
+    );
   }
 }
