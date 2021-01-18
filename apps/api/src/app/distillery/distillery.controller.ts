@@ -66,16 +66,16 @@ export class DistilleryController {
   }
 
   @Patch(':id')
-  public updateOne(
+  public findOneAndUpdate(
     @Param('id') id: string,
     @Body() updatedDistillery: DistilleryDto
   ) {
     if (!ObjectID.isValid(id)) {
       throw new BadRequestException('Provided id must be a valid id');
     }
-    return this.distilleryService.updateOne(
+    return this.distilleryService.findOneAndUpdate<DistilleryDto>(
       { _id: ObjectID.createFromHexString(id) },
-      { $set: { updatedDistillery } }
+      { $set: { ...updatedDistillery } }
     );
   }
 

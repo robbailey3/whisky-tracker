@@ -1,4 +1,3 @@
-import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { from, Observable } from 'rxjs';
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
@@ -20,7 +19,6 @@ import {
   FindOneAndReplaceOption,
   FindOneAndUpdateOption,
   FindOneOptions,
-  InsertOneWriteOpResult,
   MapReduceOptions,
   MongoClient,
   MongoCountPreferences,
@@ -225,21 +223,5 @@ export class DatabaseService implements OnModuleInit {
     options: IndexOptions = {}
   ) {
     return from(this.collection.createIndexes(indexSpecs, options));
-  }
-
-  private async setupInitialUser() {
-    const email = this.configService.get('ADMIN_USER_EMAIL');
-    const password = this.configService.get('ADMIN_USER_PASSWORD');
-    this.setCollection('users')
-      .findOne({ email })
-      .subscribe(async (result) => {
-        if (!result) {
-          const hash = await bcrypt.hash(password, 12);
-          this.collection.insertOne({
-            email,
-            password: hash
-          });
-        }
-      });
   }
 }

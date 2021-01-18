@@ -9,10 +9,21 @@ import {
 } from 'class-validator';
 import { ObjectID } from 'mongodb';
 import { ApiProperty } from '@nestjs/swagger';
-import { LocationDto } from '../../shared/dto/location.dto';
 import { Type } from 'class-transformer';
+import { LocationDto } from '../../shared/dto/location.dto';
 
-const validCategories = ['Islay', 'Speyside', 'Highland'];
+const validCategories = [
+  'Cambeltown',
+  'Highland',
+  'Island',
+  'Islay',
+  'Lowland',
+  'Speyside',
+  'Irish',
+  'Japanese',
+  'Canadian',
+  'American'
+];
 
 export class DistilleryDto {
   @IsEmpty()

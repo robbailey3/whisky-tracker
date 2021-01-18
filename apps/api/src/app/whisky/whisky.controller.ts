@@ -13,12 +13,15 @@ import {
   Param,
   Post,
   Query,
-  BadRequestException
+  BadRequestException,
+  Delete,
+  Patch
 } from '@nestjs/common';
 import { ObjectID } from 'mongodb';
 import { WhiskyDto } from './dto/whisky.dto';
 import { EntityQuery } from '../shared/entity-query/entity-query';
 import { WhiskyService } from './whisky.service';
+import { DistilleryDto } from '../distillery/dto/distillery.dto';
 
 @Controller('whisky')
 @ApiTags('Whisky')
@@ -71,5 +74,26 @@ export class WhiskyController {
   })
   public insertOne(@Body() body: Partial<WhiskyDto>) {
     return this.whiskyService.insertOne(body);
+  }
+
+  @Patch(':id')
+  public updateOne(@Param('id') id: string, @Body() updatedWhisky: WhiskyDto) {
+    if (!ObjectID.isValid(id)) {
+      throw new BadRequestException('Provided id must be a valid id');
+    }
+    return this.whiskyService.updateOne(
+      { _id: ObjectID.createFromHexString(id) },
+      { $set: { updatedWhisky } }
+    );
+  }
+
+  @Delete(':id')
+  public deleteOne(@Param('id') id: string) {
+    if (!ObjectID.isValid(id)) {
+      throw new BadRequestException('Provided id must be a valid id');
+    }
+    return this.whiskyService.deleteOne({
+      _id: ObjectID.createFromHexString(id)
+    });
   }
 }

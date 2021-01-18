@@ -2,10 +2,12 @@ import {
   CollectionInsertOneOptions,
   CommonOptions,
   FilterQuery,
+  FindOneAndUpdateOption,
   FindOneOptions,
   UpdateOneOptions,
   UpdateQuery
 } from 'mongodb';
+import { map } from 'rxjs/operators';
 import { DatabaseService } from '../database/database.service';
 
 export abstract class EntityService {
@@ -48,7 +50,18 @@ export abstract class EntityService {
   ) {
     return this.database
       .setCollection(this.collectionName)
-      .updateOne(filter, updatedDocument, options);
+      .updateOne(filter, { ...updatedDocument }, options);
+  }
+
+  public findOneAndUpdate<T>(
+    filter: FilterQuery<T>,
+    update: UpdateQuery<T>,
+    options: FindOneAndUpdateOption<T> = { returnOriginal: false }
+  ) {
+    return this.database
+      .setCollection(this.collectionName)
+      .findOneAndUpdate<T>(filter, update, options)
+      .pipe(map((result) => result.value));
   }
 
   public deleteOne<T>(filter: FilterQuery<T>, options: CommonOptions = {}) {
