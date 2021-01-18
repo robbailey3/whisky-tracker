@@ -13,14 +13,16 @@ export class UserService extends EntityService {
   }
 
   public insertUser(newUser: UserDto): Observable<UserDto> {
+    console.log({ newUser });
     return from(bcrypt.hash(newUser.password, 12)).pipe(
       switchMap((hashedPassword) => {
-        const userWithoutPassword = { password: hashedPassword, ...newUser };
+        console.log({ hashedPassword });
+        const { password, ...userWithoutPassword } = newUser;
         const user = {
           password: hashedPassword,
           ...userWithoutPassword
         } as UserDto;
-        console.log(user);
+        console.log({ user });
         return super.insertOne<UserDto>(user);
       })
     );
