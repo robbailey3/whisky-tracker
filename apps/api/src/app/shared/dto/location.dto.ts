@@ -1,12 +1,18 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber } from 'class-validator';
+import { IsIn, IsNotEmpty } from 'class-validator';
+
+const validLocationTypes = [
+  'Point',
+  'Polygon',
+  'LineString',
+  'MultiLineString',
+  'GeometryCollection'
+];
 
 export class LocationDto {
-  @IsNumber()
-  @ApiProperty({ name: 'longitude', type: Number })
-  longitude: number;
+  @IsIn(validLocationTypes)
+  @IsNotEmpty()
+  type: string;
 
-  @IsNumber()
-  @ApiProperty({ name: 'latitude', type: Number })
-  latitude: number;
+  @IsNotEmpty()
+  coordinates: number[] | number[][] | number[][][];
 }

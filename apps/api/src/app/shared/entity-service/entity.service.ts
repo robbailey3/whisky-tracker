@@ -13,7 +13,7 @@ import { DatabaseService } from '../database/database.service';
 export abstract class EntityService {
   constructor(
     protected readonly database: DatabaseService,
-    private readonly collectionName: string
+    protected readonly collectionName: string
   ) {}
 
   public find<T>(

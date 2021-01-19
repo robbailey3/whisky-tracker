@@ -1,5 +1,5 @@
 import { ConfigService } from '@nestjs/config';
-import { from, Observable } from 'rxjs';
+import { from, Observable, Subject } from 'rxjs';
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { map } from 'rxjs/operators';
 import {
@@ -32,6 +32,8 @@ import {
 
 @Injectable()
 export class DatabaseService implements OnModuleInit {
+  public isLoaded: Subject<void> = new Subject();
+
   private client: MongoClient;
 
   private db: Db;
@@ -57,6 +59,7 @@ export class DatabaseService implements OnModuleInit {
       })
         .then((client: MongoClient) => {
           Logger.log('Connected to database', DatabaseService.name);
+          this.isLoaded.next();
           this.client = client;
           this.db = this.client.db();
           // this.setupInitialUser();

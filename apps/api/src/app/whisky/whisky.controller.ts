@@ -15,13 +15,14 @@ import {
   Query,
   BadRequestException,
   Delete,
-  Patch
+  Patch,
+  UseInterceptors
 } from '@nestjs/common';
 import { ObjectID } from 'mongodb';
 import { WhiskyDto } from './dto/whisky.dto';
 import { EntityQuery } from '../shared/entity-query/entity-query';
 import { WhiskyService } from './whisky.service';
-import { DistilleryDto } from '../distillery/dto/distillery.dto';
+import { QueryParserInterceptor } from '../shared/query-parser/query-parser.interceptor';
 
 @Controller('whisky')
 @ApiTags('Whisky')
@@ -29,6 +30,7 @@ export class WhiskyController {
   constructor(private readonly whiskyService: WhiskyService) {}
 
   @Get('')
+  @UseInterceptors(QueryParserInterceptor)
   @ApiQuery({ name: 'Query', type: EntityQuery, required: false })
   @ApiOperation({
     description:

@@ -3,7 +3,7 @@ import {
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
-  ApiResponse,
+  ApiResponse
 } from '@nestjs/swagger';
 
 import { AuthGuard } from '@nestjs/passport';
@@ -19,18 +19,18 @@ export class AuthController {
   @ApiOperation({
     description:
       'Login endpoint. User logs in with their username and password.',
-    summary: 'Authenticates a user with the API.',
+    summary: 'Authenticates a user with the API.'
   })
   @ApiBody({ type: LoginDto })
   @ApiResponse({
     status: 201,
     description:
-      'Login operation is successful and the user is granted an access token.',
+      'Login operation is successful and the user is granted an access token.'
   })
   @ApiUnauthorizedResponse({ description: 'Unauthorized' })
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  public login(@Req() req) {
+  public login(@Req() req: any) {
     return this.authService.login(req.user);
   }
 }

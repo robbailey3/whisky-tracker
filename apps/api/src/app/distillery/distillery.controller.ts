@@ -16,19 +16,28 @@ import {
   Query,
   Body,
   Patch,
-  Delete
+  Delete,
+  OnModuleInit,
+  UseInterceptors
 } from '@nestjs/common';
 import { EntityQuery } from '../shared/entity-query/entity-query';
 import { DistilleryService } from './distillery.service';
 import { DistilleryDto } from './dto/distillery.dto';
+import { LocationQuery } from '../shared/entity-query/location-query';
+import { QueryParserInterceptor } from '../shared/query-parser/query-parser.interceptor';
 
 @Controller('distillery')
 @ApiTags('Distillery')
-export class DistilleryController {
+export class DistilleryController implements OnModuleInit {
   constructor(private distilleryService: DistilleryService) {}
+
+  public onModuleInit() {
+    this.distilleryService.createGeoIndex();
+  }
 
   @Get('')
   @ApiQuery({ type: EntityQuery })
+  @UseInterceptors(QueryParserInterceptor)
   @ApiOperation({
     description: 'Find multiple Distillery documents from the database',
     summary: 'Find Distilleries'
@@ -39,6 +48,23 @@ export class DistilleryController {
   ): Observable<DistilleryDto[]> {
     const { filter, ...options } = query;
     return this.distilleryService.find(filter, options);
+  }
+
+  @Get('location')
+  @ApiQuery({ type: LocationQuery })
+  @ApiOperation({
+    description:
+      'Find multiple Distillery documents from the database which are within a given distance of a particular location',
+    summary: 'Find Distilleries'
+  })
+  @ApiOkResponse({ type: [DistilleryDto] })
+  public findByLocation(@Query() query: LocationQuery) {
+    return this.distilleryService.findByLocation(
+      query.lat,
+      query.lng,
+      query.maxDistance,
+      query.minDistance
+    );
   }
 
   @Get(':id')

@@ -40,8 +40,7 @@ async function bootstrap() {
   );
   app.useGlobalInterceptors(
     new TransformInterceptor(),
-    new ClassSerializerInterceptor(app.get(Reflector)),
-    new QueryParserInterceptor()
+    new ClassSerializerInterceptor(app.get(Reflector))
   );
 
   const globalPrefix = 'api';
