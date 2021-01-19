@@ -2,6 +2,7 @@ import {
   AfterContentInit,
   Component,
   ContentChildren,
+  Input,
   QueryList
 } from '@angular/core';
 import { CarouselItemComponent } from './carousel-item/carousel-item.component';
@@ -15,19 +16,20 @@ export class CarouselComponent implements AfterContentInit {
   @ContentChildren(CarouselItemComponent)
   carouselItems: QueryList<CarouselItemComponent>;
 
-  public activeIndex = 0;
+  @Input() interval = 10000;
 
-  public interval;
+  private setIntervalReturn;
+
+  public activeIndex = 0;
 
   public ngAfterContentInit(): void {
     console.log(this.carouselItems);
-    this.carouselItems.first.isActive = true;
 
     this.startCarousel();
   }
 
   public startCarousel() {
-    this.interval = setInterval(() => {
+    this.setIntervalReturn = setInterval(() => {
       this.activeIndex =
         this.activeIndex + 1 >= this.carouselItems.length
           ? 0
@@ -37,6 +39,6 @@ export class CarouselComponent implements AfterContentInit {
         // eslint-disable-next-line no-param-reassign
         item.isActive = this.activeIndex === index;
       });
-    }, 1000);
+    }, this.interval);
   }
 }
