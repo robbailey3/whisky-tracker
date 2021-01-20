@@ -63,7 +63,28 @@ describe('CarouselComponent', () => {
   });
   describe('button functionality', () => {
     it('should move to the next item when the next button is clicked', () => {
-      expect(true).toBeTruthy();
+      const nextButton = fixture.debugElement.nativeElement.querySelector(
+        '.carousel-next button'
+      );
+      const currentIndex = component.activeIndex;
+      nextButton.dispatchEvent(new Event('click'));
+      expect(component.activeIndex).toBe(
+        currentIndex + 1 >= component.carouselItems.length
+          ? 0
+          : currentIndex + 1
+      );
+    });
+    it('should move to the previous item when the previous button is clicked', () => {
+      const prevButton = fixture.debugElement.nativeElement.querySelector(
+        '.carousel-prev button'
+      );
+      const currentIndex = component.activeIndex;
+      prevButton.dispatchEvent(new Event('click'));
+      expect(component.activeIndex).toBe(
+        currentIndex - 1 < 0
+          ? component.carouselItems.length - 1
+          : currentIndex - 1
+      );
     });
   });
 });

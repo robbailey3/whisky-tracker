@@ -52,10 +52,20 @@ export class CarouselComponent implements AfterContentInit {
     }, this.interval) as unknown) as NodeJS.Timeout;
   }
 
+  /**
+   * A method to clear the interval initialised in startCarousel
+   */
   public pause() {
     clearInterval(this.setIntervalReturn);
   }
 
+  /**
+   *
+   *
+   * @private
+   * @param {number} [index] An optional parameter to set a specific index
+   * @memberof CarouselComponent
+   */
   private setActiveCarouselItem(index?: number) {
     if (index !== undefined) {
       this.pause();
