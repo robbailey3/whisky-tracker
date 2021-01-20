@@ -1,1 +1,17 @@
-<p>accordion-item works!</p>
+<div class="accordion-item">
+  <div class="accordion-item-header">
+    <button (click)="toggleState()" class="accordion-item-button">
+      <span class="accordion-item-title">{{ title }}</span>
+      <span class="accordion-item-icon" [ngClass]="{ active: state === 'open' }"
+        ><fa-icon [icon]="faChevronDown"></fa-icon
+      ></span>
+    </button>
+  </div>
+  <div
+    class="accordion-body"
+    [attr.aria-expanded]="state === 'open'"
+    [ngStyle]="{ display: state === 'closed' ? 'none' : 'block' }"
+  >
+    <ng-content></ng-content>
+  </div>
+</div>

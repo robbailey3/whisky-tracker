@@ -1,3 +1,4 @@
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AccordionItemComponent } from './accordion-item.component';
@@ -8,9 +9,9 @@ describe('AccordionItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccordionItemComponent ]
-    })
-    .compileComponents();
+      declarations: [AccordionItemComponent],
+      imports: [FontAwesomeModule]
+    }).compileComponents();
   });
 
   beforeEach(() => {

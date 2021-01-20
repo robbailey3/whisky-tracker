@@ -22,6 +22,9 @@ export class CarouselComponent implements AfterContentInit {
   @ContentChildren(CarouselItemComponent)
   carouselItems: QueryList<CarouselItemComponent>;
 
+  /**
+   * The amount of time it takes to move automatically to the next slide
+   */
   @Input() interval = 1000;
 
   private setIntervalReturn: NodeJS.Timeout;
@@ -39,13 +42,17 @@ export class CarouselComponent implements AfterContentInit {
   public ngAfterContentInit(): void {
     if (this.carouselItems.length === 0 || !this.carouselItems) {
       throw new Error(
-        'CarouselComponent *needs* to have CarouselItemComponents as children'
+        'CarouselComponent needs to have CarouselItemComponents as children'
       );
     }
     this.carouselItems.first.isActive = true;
     this.startCarousel();
   }
 
+  /**
+   * Start the carousel so it automatically moves to the next slide
+   * after the specified interval.
+   */
   public startCarousel() {
     this.setIntervalReturn = (setInterval(() => {
       this.next();
@@ -60,11 +67,8 @@ export class CarouselComponent implements AfterContentInit {
   }
 
   /**
-   *
-   *
-   * @private
+   * A method to loop through the CarouselItems and set *only* the active one to active
    * @param {number} [index] An optional parameter to set a specific index
-   * @memberof CarouselComponent
    */
   private setActiveCarouselItem(index?: number) {
     if (index !== undefined) {
@@ -78,18 +82,27 @@ export class CarouselComponent implements AfterContentInit {
     });
   }
 
+  /**
+   * Handle the user's click on the next button
+   */
   public handleNextClick() {
     this.pause();
     this.next();
     this.startCarousel();
   }
 
+  /**
+   * Handle the user's click on the prev button
+   */
   public handlePrevClick() {
     this.pause();
     this.prev();
     this.startCarousel();
   }
 
+  /**
+   * Move to the next CarouselItem
+   */
   private next() {
     this.activeIndex =
       this.activeIndex + 1 >= this.carouselItems.length
@@ -99,6 +112,9 @@ export class CarouselComponent implements AfterContentInit {
     this.setActiveCarouselItem();
   }
 
+  /**
+   * Move to the previous CarouselItem
+   */
   private prev() {
     this.activeIndex =
       this.activeIndex - 1 < 0
