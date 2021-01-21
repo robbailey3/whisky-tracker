@@ -34,7 +34,20 @@ export class TabsComponent implements AfterViewInit {
   public handleKeypress($event: KeyboardEvent) {
     const { key } = $event;
     if (key === 'ArrowRight') {
+      this.activeIndex =
+        this.activeIndex + 1 >= this.tabs.length ? 0 : this.activeIndex + 1;
     }
+    if (key === 'ArrowLeft') {
+      this.activeIndex =
+        this.activeIndex - 1 < 0 ? this.tabs.length - 1 : this.activeIndex - 1;
+    }
+    if (key === 'Home') {
+      this.activeIndex = 0;
+    }
+    if (key === 'End') {
+      this.activeIndex = this.tabs.length - 1;
+    }
+    this.setActiveTab(this.activeIndex);
   }
 
   /**
