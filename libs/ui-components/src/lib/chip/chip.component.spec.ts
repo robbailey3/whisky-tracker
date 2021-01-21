@@ -1,26 +1,26 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Spectator, createComponentFactory } from '@ngneat/spectator';
 import { ButtonsModule } from '../buttons/buttons.module';
 
 import { ChipComponent } from './chip.component';
 
 describe('ChipComponent', () => {
-  let component: ChipComponent;
-  let fixture: ComponentFixture<ChipComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ChipComponent],
-      imports: [ButtonsModule]
-    }).compileComponents();
+  let spectator: Spectator<ChipComponent>;
+  const createComponent = createComponentFactory({
+    component: ChipComponent,
+    imports: [ButtonsModule]
   });
-
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChipComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    spectator = createComponent();
+  });
+  it('should create', () => {
+    expect(spectator).toBeTruthy();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('[METHOD]: onDismissClick', () => {
+    it('should emit', () => {
+      const spy = jest.spyOn(spectator.component.handleDismiss, 'emit');
+      spectator.component.onDismissClick();
+      expect(spy).toHaveBeenCalled();
+    });
   });
 });

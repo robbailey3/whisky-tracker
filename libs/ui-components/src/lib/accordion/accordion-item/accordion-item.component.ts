@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'rob-accordion-item',
@@ -9,11 +10,13 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 export class AccordionItemComponent {
   @Input() title: string;
 
+  @Output() accordionClick: Subject<AccordionItemComponent> = new Subject();
+
   public state: 'open' | 'closed' = 'closed';
 
   public faChevronDown = faChevronDown;
 
-  public toggleState() {
-    this.state = this.state === 'closed' ? 'open' : 'closed';
+  public handleClick() {
+    this.accordionClick.next(this);
   }
 }

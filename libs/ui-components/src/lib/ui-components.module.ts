@@ -12,6 +12,7 @@ import { AccordionModule } from './accordion/accordion.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { CardComponent } from './card/card.component';
 import { TooltipDirective } from './tooltip/tooltip.directive';
+import { FocusTrapDirective } from './focus-trap/focus-trap.directive';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { TooltipDirective } from './tooltip/tooltip.directive';
     FormItemsModule,
     ModalComponent,
     CardComponent,
-    TooltipDirective
+    TooltipDirective,
+    FocusTrapDirective
   ],
   providers: [NotificationsService],
   declarations: [
@@ -40,7 +42,8 @@ import { TooltipDirective } from './tooltip/tooltip.directive';
     ChipComponent,
     TooltipComponent,
     CardComponent,
-    TooltipDirective
+    TooltipDirective,
+    FocusTrapDirective
   ]
 })
 export class UiComponentsModule {}

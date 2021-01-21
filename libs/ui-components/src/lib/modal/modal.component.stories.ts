@@ -1,6 +1,7 @@
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { moduleMetadata, Story } from '@storybook/angular';
 import { ButtonsModule } from '../buttons/buttons.module';
+import { FocusTrapDirective } from '../focus-trap/focus-trap.directive';
 
 import { ModalComponent } from './modal.component';
 
@@ -11,7 +12,7 @@ export default {
   component: ModalComponent,
   decorators: [
     moduleMetadata({
-      declarations: [ModalComponent],
+      declarations: [ModalComponent, FocusTrapDirective],
       imports: [FontAwesomeModule, ButtonsModule]
     })
   ]

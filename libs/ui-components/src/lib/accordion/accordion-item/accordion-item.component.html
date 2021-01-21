@@ -1,6 +1,6 @@
 <div class="accordion-item">
   <div class="accordion-item-header">
-    <button (click)="toggleState()" class="accordion-item-button">
+    <button (click)="handleClick()" class="accordion-item-button">
       <span class="accordion-item-title">{{ title }}</span>
       <span class="accordion-item-icon" [ngClass]="{ active: state === 'open' }"
         ><fa-icon [icon]="faChevronDown"></fa-icon
