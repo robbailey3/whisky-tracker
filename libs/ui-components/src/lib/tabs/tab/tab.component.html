@@ -1,3 +1,8 @@
-<div [ngClass]="{ 'sr-only': !isActive }" [id]="id" [attr.aria-label]="title">
+<div
+  [ngClass]="{ 'sr-only': !isActive }"
+  [id]="id"
+  [attr.aria-label]="title"
+  role="tabpanel"
+>
   <ng-content></ng-content>
 </div>

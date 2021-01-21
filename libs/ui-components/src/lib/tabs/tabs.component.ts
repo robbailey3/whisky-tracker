@@ -30,6 +30,9 @@ export class TabsComponent implements AfterViewInit {
     this.tabs.first.isActive = true;
   }
 
+  /**
+   * Adding keyup event listener to meet WCAG for tabs
+   */
   @HostListener('keyup', ['$event'])
   public handleKeypress($event: KeyboardEvent) {
     const { key } = $event;
