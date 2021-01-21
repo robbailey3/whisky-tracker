@@ -46,7 +46,8 @@
               "parameterProperties": "explicit"
             }
           }
-        ]
+        ],
+        "no-param-reassign": [0]
       }
     },
     {

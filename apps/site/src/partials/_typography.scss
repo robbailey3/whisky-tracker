@@ -34,3 +34,10 @@ h5 {
 h6 {
   @apply text-base;
 }
+
+a,
+button {
+  &:focus {
+    outline: 2px solid red;
+  }
+}

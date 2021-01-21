@@ -1,6 +1,5 @@
 {
   "scss.validate": false,
-  "editor.fontFamily": "Victor Mono, Consolas, 'Courier New', monospace",
-  "editor.fontSize": 15,
-  "vsicons.presets.angular": true
+  "vsicons.presets.angular": true,
+  "editor.fontFamily": "'Fira Code', 'Courier New', monospace"
 }
