@@ -94,7 +94,6 @@ describe('TabsComponent', () => {
       spectator.dispatchKeyboardEvent(spectator.element, 'keyup', 'End');
       expect(spectator.component.activeIndex).toEqual(3);
     });
-
     it("shouldn't move anywhere if the shift key is pressed", () => {
       spectator.keyboard.pressKey('shift.ArrowRight');
       expect(spectator.component.activeIndex).toEqual(0);

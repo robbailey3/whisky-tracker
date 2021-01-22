@@ -1,6 +1,12 @@
 <div class="accordion-item">
   <div class="accordion-item-header">
-    <button (click)="handleClick()" class="accordion-item-button">
+    <button
+      (click)="handleClick()"
+      [attr.aria-expanded]="state === 'open'"
+      [attr.aria-controls]="id"
+      class="accordion-item-button"
+      #accordionButton
+    >
       <span class="accordion-item-title">{{ title }}</span>
       <span class="accordion-item-icon" [ngClass]="{ active: state === 'open' }"
         ><fa-icon [icon]="faChevronDown"></fa-icon
@@ -9,8 +15,12 @@
   </div>
   <div
     class="accordion-body"
-    [attr.aria-expanded]="state === 'open'"
-    [ngStyle]="{ display: state === 'closed' ? 'none' : 'block' }"
+    *ngIf="state === 'open'"
+    [id]="id"
+    [attr.aria-label]="title"
+    role="region"
+    [@growIn]
+    [@shrinkOut]
   >
     <ng-content></ng-content>
   </div>
