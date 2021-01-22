@@ -5,7 +5,8 @@ import {
   QueryList,
   ViewChildren,
   ElementRef,
-  HostListener
+  HostListener,
+  AfterContentInit
 } from '@angular/core';
 import { TabComponent } from './tab/tab.component';
 
@@ -14,7 +15,7 @@ import { TabComponent } from './tab/tab.component';
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.scss']
 })
-export class TabsComponent implements AfterViewInit {
+export class TabsComponent implements AfterContentInit {
   @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;
 
   @ViewChildren('tabButton') tabButtons: QueryList<
@@ -26,7 +27,7 @@ export class TabsComponent implements AfterViewInit {
   /**
    * Set the first tab to active.
    */
-  public ngAfterViewInit(): void {
+  public ngAfterContentInit(): void {
     this.tabs.first.isActive = true;
   }
 
@@ -35,6 +36,9 @@ export class TabsComponent implements AfterViewInit {
    */
   @HostListener('keyup', ['$event'])
   public handleKeypress($event: KeyboardEvent) {
+    if ($event.shiftKey || $event.ctrlKey) {
+      return;
+    }
     const { key } = $event;
     if (key === 'ArrowRight') {
       this.activeIndex =
@@ -50,6 +54,7 @@ export class TabsComponent implements AfterViewInit {
     if (key === 'End') {
       this.activeIndex = this.tabs.length - 1;
     }
+    this.tabButtons.toArray()[this.activeIndex].nativeElement.focus();
     this.setActiveTab(this.activeIndex);
   }
 
