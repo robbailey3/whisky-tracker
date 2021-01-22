@@ -9,7 +9,9 @@ import {
   faChevronLeft,
   faChevronRight,
   faCircle,
-  faDotCircle
+  faDotCircle,
+  faPause,
+  faPlay
 } from '@fortawesome/free-solid-svg-icons';
 import { CarouselItemComponent } from './carousel-item/carousel-item.component';
 
@@ -31,6 +33,8 @@ export class CarouselComponent implements AfterContentInit {
 
   public activeIndex = 0;
 
+  public currentState: 'playing' | 'paused' = 'playing';
+
   public faChevronRight = faChevronRight;
 
   public faChevronLeft = faChevronLeft;
@@ -38,6 +42,10 @@ export class CarouselComponent implements AfterContentInit {
   public faDotCircle = faDotCircle;
 
   public faCircle = faCircle;
+
+  public faPause = faPause;
+
+  public faPlay = faPlay;
 
   public ngAfterContentInit(): void {
     if (this.carouselItems.length === 0 || !this.carouselItems) {
@@ -64,6 +72,15 @@ export class CarouselComponent implements AfterContentInit {
    */
   public pause() {
     clearInterval(this.setIntervalReturn);
+  }
+
+  public toggleState() {
+    this.currentState = this.currentState === 'paused' ? 'playing' : 'paused';
+    if (this.currentState === 'paused') {
+      this.pause();
+    } else {
+      this.startCarousel();
+    }
   }
 
   /**

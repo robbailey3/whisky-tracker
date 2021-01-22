@@ -22,5 +22,5 @@ export const Carousel = (args: CarouselComponent) => ({
 });
 
 Carousel.args = {
-  interval: 5000
+  interval: 1000
 };

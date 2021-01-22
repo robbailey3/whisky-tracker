@@ -1,3 +1,4 @@
+<ng-template #transclude><ng-content></ng-content></ng-template>
 <ng-container *ngIf="!href; else noHref">
   <button
     [ngClass]="{
@@ -21,6 +22,7 @@
       ><fa-icon [icon]="icon"></fa-icon
     ></span>
     <span class="button-label">{{ label }}</span>
+    <ng-container *ngTemplateOutlet="transclude"></ng-container>
   </button>
 </ng-container>
 <ng-template #noHref>
@@ -49,5 +51,6 @@
       ><fa-icon [icon]="icon"></fa-icon
     ></span>
     <span class="button-label">{{ label }}</span>
+    <ng-container *ngTemplateOutlet="transclude"></ng-container>
   </a>
 </ng-template>
