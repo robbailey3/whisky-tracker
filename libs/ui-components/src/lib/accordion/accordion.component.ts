@@ -32,7 +32,6 @@ export class AccordionComponent implements AfterContentInit {
   @HostListener('keyup', ['$event'])
   public handleKeyup($event: KeyboardEvent) {
     const { key } = $event;
-    console.log($event);
     if (['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(key)) {
       if (key === 'ArrowUp') {
         this.focusedElementIndex =
@@ -62,11 +61,11 @@ export class AccordionComponent implements AfterContentInit {
     this.focusedElementIndex = this.accordionItems
       .toArray()
       .indexOf(accordionItem);
+
     this.accordionItems.forEach((item) => {
-      // eslint-disable-next-line no-param-reassign
       item.state = 'closed';
     });
-    // eslint-disable-next-line no-param-reassign
+
     accordionItem.state = 'open';
   }
 }
