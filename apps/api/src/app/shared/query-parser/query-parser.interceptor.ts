@@ -2,12 +2,11 @@ import {
   CallHandler,
   ExecutionContext,
   Injectable,
-  NestInterceptor,
+  NestInterceptor
 } from '@nestjs/common';
 import { MongooseQueryParser } from 'mongoose-query-parser';
 import { Observable } from 'rxjs';
 import { Request } from 'express';
-import { EntityQuery } from "../entity-query/entity-query";
 
 @Injectable()
 export class QueryParserInterceptor implements NestInterceptor {
@@ -17,8 +16,10 @@ export class QueryParserInterceptor implements NestInterceptor {
   ): Observable<any> {
     const parser = new MongooseQueryParser();
     const req: Request = context.switchToHttp().getRequest();
-    req.query = parser.parse(req.query) as EntityQuery<any>;
-    req.query.limit = !req.query.limit ? 100 : Math.min(req.query.limit, 100);
+    req.query = parser.parse(req.query) as any;
+    req.query.limit = !req.query.limit
+      ? 100
+      : (Math.min(parseInt(req.query.limit as string, 10), 100) as any);
 
     return next.handle();
   }
