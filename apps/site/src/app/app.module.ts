@@ -3,13 +3,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { UiComponentsModule } from '@whisky-tracker/ui-components';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ServiceWorkerModule } from '@angular/service-worker';
+
 import { GlobalModule } from './global/global.module';
 
 import { AppComponent } from './app.component';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [AppRoutingModule, BrowserModule.withServerTransition({ appId: 'serverApp' }), GlobalModule, UiComponentsModule],
+  imports: [
+    AppRoutingModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    GlobalModule,
+    UiComponentsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production
+    })
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
