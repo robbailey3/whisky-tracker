@@ -1,22 +1,16 @@
+import { Spectator, createComponentFactory } from '@ngneat/spectator';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CarouselItemComponent } from './carousel-item.component';
 
-describe('CarouselItemComponent', () => {
+describe('[COMPONENT]: CarouselItemComponent', () => {
   let component: CarouselItemComponent;
-  let fixture: ComponentFixture<CarouselItemComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ CarouselItemComponent ]
-    })
-    .compileComponents();
-  });
+  let spectator: Spectator<CarouselItemComponent>;
+  const componentFactory = createComponentFactory(CarouselItemComponent);
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CarouselItemComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    spectator = componentFactory();
+    component = spectator.component;
   });
 
   it('should create', () => {

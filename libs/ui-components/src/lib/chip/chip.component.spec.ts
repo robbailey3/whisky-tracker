@@ -3,7 +3,7 @@ import { ButtonsModule } from '../buttons/buttons.module';
 
 import { ChipComponent } from './chip.component';
 
-describe('ChipComponent', () => {
+describe('[COMPONENT]: ChipComponent', () => {
   let spectator: Spectator<ChipComponent>;
   const createComponent = createComponentFactory({
     component: ChipComponent,

@@ -57,6 +57,7 @@ export class RadioButtonComponent implements ControlValueAccessor {
   }
 
   public change() {
+    console.log(this.value);
     this.onChange(this.value);
   }
 }

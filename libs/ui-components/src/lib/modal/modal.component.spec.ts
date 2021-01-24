@@ -1,24 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Spectator, createComponentFactory } from '@ngneat/spectator';
 import { ButtonsModule } from '../buttons/buttons.module';
 import { FocusTrapDirective } from '../focus-trap/focus-trap.directive';
 
 import { ModalComponent } from './modal.component';
 
 describe('ModalComponent', () => {
+  let spectator: Spectator<ModalComponent>;
   let component: ModalComponent;
-  let fixture: ComponentFixture<ModalComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ModalComponent, FocusTrapDirective],
-      imports: [ButtonsModule]
-    }).compileComponents();
+  const componentFactory = createComponentFactory({
+    component: ModalComponent,
+    declarations: [FocusTrapDirective],
+    imports: [ButtonsModule]
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModalComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    spectator = componentFactory();
+    component = spectator.component;
   });
 
   it('should create', () => {

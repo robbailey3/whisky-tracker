@@ -34,26 +34,18 @@ export class AccordionComponent implements AfterContentInit {
     const { key } = $event;
     if (['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(key)) {
       if (key === 'ArrowUp') {
-        this.focusedElementIndex =
-          this.focusedElementIndex - 1 < 0
-            ? this.accordionItems.length - 1
-            : this.focusedElementIndex - 1;
+        this.focusPreviousItem();
       }
       if (key === 'ArrowDown') {
-        this.focusedElementIndex =
-          this.focusedElementIndex + 1 >= this.accordionItems.length
-            ? 0
-            : this.focusedElementIndex + 1;
+        this.focusNextItem();
       }
       if (key === 'Home') {
-        this.focusedElementIndex = 0;
+        this.focusFirstItem();
       }
       if (key === 'End') {
-        this.focusedElementIndex = this.accordionItems.length - 1;
+        this.focusLastItem();
       }
-      this.accordionItems
-        .toArray()
-        [this.focusedElementIndex].accordionButton.nativeElement.focus();
+      this.setFocus();
     }
   }
 
@@ -67,5 +59,33 @@ export class AccordionComponent implements AfterContentInit {
     });
 
     accordionItem.state = 'open';
+  }
+
+  private focusNextItem() {
+    this.focusedElementIndex =
+      this.focusedElementIndex + 1 >= this.accordionItems.length
+        ? 0
+        : this.focusedElementIndex + 1;
+  }
+
+  private focusPreviousItem() {
+    this.focusedElementIndex =
+      this.focusedElementIndex - 1 < 0
+        ? this.accordionItems.length - 1
+        : this.focusedElementIndex - 1;
+  }
+
+  private focusFirstItem() {
+    this.focusedElementIndex = 0;
+  }
+
+  private focusLastItem() {
+    this.focusedElementIndex = this.accordionItems.length - 1;
+  }
+
+  private setFocus() {
+    this.accordionItems
+      .toArray()
+      [this.focusedElementIndex].accordionButton.nativeElement.focus();
   }
 }

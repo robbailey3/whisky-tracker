@@ -1,23 +1,20 @@
+import { Spectator, createComponentFactory } from '@ngneat/spectator';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ButtonComponent } from './button.component';
 
 describe('ButtonComponent', () => {
+  let spectator: Spectator<ButtonComponent>;
   let component: ButtonComponent;
-  let fixture: ComponentFixture<ButtonComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ButtonComponent],
-      imports: [FontAwesomeModule]
-    }).compileComponents();
+  const componentFactory = createComponentFactory({
+    component: ButtonComponent,
+    imports: [FontAwesomeModule]
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ButtonComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    spectator = componentFactory();
+    component = spectator.component;
   });
 
   it('should create', () => {
@@ -25,12 +22,10 @@ describe('ButtonComponent', () => {
   });
 
   it('should emit when clicked', () => {
-    jest.spyOn(component.buttonClick, 'emit');
-    const { nativeElement } = fixture;
-    const button = nativeElement.querySelector('button');
-    button.dispatchEvent(new Event('click'));
-    fixture.detectChanges();
+    const spy = jest.spyOn(component.buttonClick, 'emit');
+    const button = spectator.query('button');
+    spectator.dispatchMouseEvent(button, 'click');
 
-    expect(component.buttonClick.emit).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
   });
 });

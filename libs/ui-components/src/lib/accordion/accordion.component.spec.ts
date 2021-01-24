@@ -12,7 +12,7 @@ import { AccordionComponent } from './accordion.component';
 })
 class AccordionTestWrapperComponent {}
 
-describe('AccordionComponent', () => {
+describe('[COMPONENT]: AccordionComponent', () => {
   let spectator: SpectatorHost<
     AccordionComponent,
     AccordionTestWrapperComponent
@@ -95,9 +95,15 @@ describe('AccordionComponent', () => {
           'keyup',
           'ArrowDown'
         );
-        console.log({ i, expectedIndex });
+
         expect(component.focusedElementIndex).toEqual(expectedIndex);
       }
+    });
+
+    it('should call focusNextItem when the ArrowDown key is pressed', () => {
+      const spy = jest.spyOn<any, any>(component, 'focusNextItem');
+      spectator.dispatchKeyboardEvent(spectator.element, 'keyup', 'ArrowDown');
+      expect(spy).toHaveBeenCalled();
     });
 
     it('should move the focussed index to the previous element when the ArrowUp key is pressed', () => {
@@ -113,6 +119,12 @@ describe('AccordionComponent', () => {
       }
     });
 
+    it('should call focusPrevItem when the ArrowUp key is pressed', () => {
+      const spy = jest.spyOn<any, any>(component, 'focusPreviousItem');
+      spectator.dispatchKeyboardEvent(spectator.element, 'keyup', 'ArrowUp');
+      expect(spy).toHaveBeenCalled();
+    });
+
     it('should move the focussed index to the last element when the End key is pressed', () => {
       for (let i = 0; i < component.accordionItems.length; i++) {
         component.focusedElementIndex = i;
@@ -124,6 +136,12 @@ describe('AccordionComponent', () => {
       }
     });
 
+    it('should call focusLastItem when the End key is pressed', () => {
+      const spy = jest.spyOn<any, any>(component, 'focusLastItem');
+      spectator.dispatchKeyboardEvent(spectator.element, 'keyup', 'End');
+      expect(spy).toHaveBeenCalled();
+    });
+
     it('should move the focussed index to the first element when the Home key is pressed', () => {
       for (let i = 0; i < component.accordionItems.length; i++) {
         component.focusedElementIndex = i;
@@ -133,6 +151,21 @@ describe('AccordionComponent', () => {
 
         expect(component.focusedElementIndex).toEqual(expectedIndex);
       }
+    });
+
+    it('should call focusFirstItem when the Home key is pressed', () => {
+      const spy = jest.spyOn<any, any>(component, 'focusFirstItem');
+      spectator.dispatchKeyboardEvent(spectator.element, 'keyup', 'Home');
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('should call the setFocus method when a relevant key is pressed', () => {
+      ['ArrowUp', 'ArrowDown', 'Home', 'End'].forEach((key) => {
+        const spy = jest.spyOn<any, any>(component, 'setFocus');
+        spectator.dispatchKeyboardEvent(spectator.element, 'keyup', key);
+
+        expect(spy).toHaveBeenCalled();
+      });
     });
   });
 });

@@ -14,6 +14,7 @@
         [value]="option.value"
         [checked]="value === option.value"
         [(ngModel)]="value"
+        (change)="change()"
         #input="ngModel"
       />
       <label class="form-label" [for]="id + '__' + i">{{ option.key }}</label>

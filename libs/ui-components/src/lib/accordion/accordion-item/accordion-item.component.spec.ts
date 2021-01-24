@@ -1,3 +1,4 @@
+import { createComponentFactory, Spectator } from '@ngneat/spectator';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -6,22 +7,31 @@ import { AccordionItemComponent } from './accordion-item.component';
 
 describe('AccordionItemComponent', () => {
   let component: AccordionItemComponent;
-  let fixture: ComponentFixture<AccordionItemComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [AccordionItemComponent],
-      imports: [FontAwesomeModule, BrowserAnimationsModule]
-    }).compileComponents();
+  let spectator: Spectator<AccordionItemComponent>;
+  const createComponent = createComponentFactory({
+    component: AccordionItemComponent,
+    imports: [FontAwesomeModule, BrowserAnimationsModule]
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AccordionItemComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    spectator = createComponent();
+    component = spectator.component;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('[OUTPUT]: accordionClick', () => {
+    it('should call accordionClick.next when the button is clicked', () => {
+      const spy = jest.spyOn(component.accordionClick, 'next');
+
+      spectator.dispatchMouseEvent(
+        component.accordionButton.nativeElement,
+        'click'
+      );
+
+      expect(spy).toHaveBeenCalled();
+    });
   });
 });
