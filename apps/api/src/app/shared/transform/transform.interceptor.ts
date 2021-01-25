@@ -3,7 +3,7 @@ import {
   ExecutionContext,
   Injectable,
   NestInterceptor,
-  Logger,
+  Logger
 } from '@nestjs/common';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -22,13 +22,18 @@ export class TransformInterceptor<T>
     const response = context.switchToHttp().getResponse();
     return next.handle().pipe(
       map((results: any) => {
+        let count: number;
+        if (Array.isArray(results)) {
+          count = results.length;
+        } else {
+          count = results ? 1 : 0;
+        }
         const common = {
           status: response.statusCode,
           timestamp: Date.now(),
-          count: Array.isArray(results) ? results.length : results ? 1 : 0,
+          count
         };
         return {
-          
           ...common,
           ...(Array.isArray(results) ? { results } : { result: results })
         };

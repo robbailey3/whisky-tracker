@@ -1,12 +1,6 @@
-import { Component, DebugElement, ViewChild } from '@angular/core';
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick
-} from '@angular/core/testing';
+import { Component, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { By } from '@angular/platform-browser';
 import { WordCountDirective } from '../validators/word-count.directive';
 
 import { TextareaComponent } from './textarea.component';
@@ -32,7 +26,7 @@ describe('TextareaComponent', () => {
   let hostFixture: ComponentFixture<TestTextAreaComponent>;
   let changeSpy: jest.SpyInstance;
   let textareaComponent: TextareaComponent;
-  let textarea;
+  let textarea: HTMLTextAreaElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

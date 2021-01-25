@@ -1,14 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AccordionItemComponent } from './accordion-item/accordion-item.component';
 import { SpectatorHost, createHostFactory } from '@ngneat/spectator';
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AccordionItemComponent } from './accordion-item/accordion-item.component';
 
 import { AccordionComponent } from './accordion.component';
 
 @Component({
-  selector: 'accordion-test-wrapper',
-  template: ``
+  selector: 'rob-accordion-test-wrapper'
 })
 class AccordionTestWrapperComponent {}
 
@@ -85,7 +84,7 @@ describe('[COMPONENT]: AccordionComponent', () => {
     });
 
     it('should move the focussed index to the next element when the ArrowDown key is pressed', () => {
-      for (let i = 0; i < component.accordionItems.length; i++) {
+      for (let i = 0; i < component.accordionItems.length; i += 1) {
         component.focusedElementIndex = i;
         const expectedIndex =
           i + 1 > component.accordionItems.length - 1 ? 0 : i + 1;
@@ -101,13 +100,13 @@ describe('[COMPONENT]: AccordionComponent', () => {
     });
 
     it('should call focusNextItem when the ArrowDown key is pressed', () => {
-      const spy = jest.spyOn<any, any>(component, 'focusNextItem');
+      const focusNextSpy = jest.spyOn<any, any>(component, 'focusNextItem');
       spectator.dispatchKeyboardEvent(spectator.element, 'keyup', 'ArrowDown');
-      expect(spy).toHaveBeenCalled();
+      expect(focusNextSpy).toHaveBeenCalled();
     });
 
     it('should move the focussed index to the previous element when the ArrowUp key is pressed', () => {
-      for (let i = 0; i < component.accordionItems.length; i++) {
+      for (let i = 0; i < component.accordionItems.length; i += 1) {
         component.focusedElementIndex = i;
 
         const expectedIndex =
@@ -120,13 +119,16 @@ describe('[COMPONENT]: AccordionComponent', () => {
     });
 
     it('should call focusPrevItem when the ArrowUp key is pressed', () => {
-      const spy = jest.spyOn<any, any>(component, 'focusPreviousItem');
+      const focusPreviousSpy = jest.spyOn<any, any>(
+        component,
+        'focusPreviousItem'
+      );
       spectator.dispatchKeyboardEvent(spectator.element, 'keyup', 'ArrowUp');
-      expect(spy).toHaveBeenCalled();
+      expect(focusPreviousSpy).toHaveBeenCalled();
     });
 
     it('should move the focussed index to the last element when the End key is pressed', () => {
-      for (let i = 0; i < component.accordionItems.length; i++) {
+      for (let i = 0; i < component.accordionItems.length; i += 1) {
         component.focusedElementIndex = i;
         const expectedIndex = component.accordionItems.length - 1;
 
@@ -137,13 +139,13 @@ describe('[COMPONENT]: AccordionComponent', () => {
     });
 
     it('should call focusLastItem when the End key is pressed', () => {
-      const spy = jest.spyOn<any, any>(component, 'focusLastItem');
+      const focusLastSpy = jest.spyOn<any, any>(component, 'focusLastItem');
       spectator.dispatchKeyboardEvent(spectator.element, 'keyup', 'End');
-      expect(spy).toHaveBeenCalled();
+      expect(focusLastSpy).toHaveBeenCalled();
     });
 
     it('should move the focussed index to the first element when the Home key is pressed', () => {
-      for (let i = 0; i < component.accordionItems.length; i++) {
+      for (let i = 0; i < component.accordionItems.length; i += 1) {
         component.focusedElementIndex = i;
         const expectedIndex = 0;
 
@@ -154,17 +156,17 @@ describe('[COMPONENT]: AccordionComponent', () => {
     });
 
     it('should call focusFirstItem when the Home key is pressed', () => {
-      const spy = jest.spyOn<any, any>(component, 'focusFirstItem');
+      const focusFirstSpy = jest.spyOn<any, any>(component, 'focusFirstItem');
       spectator.dispatchKeyboardEvent(spectator.element, 'keyup', 'Home');
-      expect(spy).toHaveBeenCalled();
+      expect(focusFirstSpy).toHaveBeenCalled();
     });
 
     it('should call the setFocus method when a relevant key is pressed', () => {
       ['ArrowUp', 'ArrowDown', 'Home', 'End'].forEach((key) => {
-        const spy = jest.spyOn<any, any>(component, 'setFocus');
+        const setFocusSpy = jest.spyOn<any, any>(component, 'setFocus');
         spectator.dispatchKeyboardEvent(spectator.element, 'keyup', key);
 
-        expect(spy).toHaveBeenCalled();
+        expect(setFocusSpy).toHaveBeenCalled();
       });
     });
   });

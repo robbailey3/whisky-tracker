@@ -4,7 +4,7 @@ import { TabComponent } from './tab/tab.component';
 
 import { TabsComponent } from './tabs.component';
 
-@Component({ selector: 'tabs-test-host', template: `` })
+@Component({ selector: 'rob-tabs-test-host' })
 class TabsTestHostComponent {}
 
 describe('TabsComponent', () => {
@@ -45,20 +45,20 @@ describe('TabsComponent', () => {
       spectator.component.activeIndex = 0;
     });
     it('should call the handleKeypress method when a keyup event is fired', () => {
-      let spy = jest.spyOn(spectator.component, 'handleKeypress');
+      const spy = jest.spyOn(spectator.component, 'handleKeypress');
       expect(spy).not.toHaveBeenCalled();
       spectator.dispatchKeyboardEvent(spectator.element, 'keyup', 'ArrowRight');
       expect(spy).toHaveBeenCalled();
     });
 
     it('should move to the next tab if the RightArrow key is pressed', () => {
-      let currentIndex = spectator.component.activeIndex;
-      let expectedIndex =
+      const currentIndex = spectator.component.activeIndex;
+      const expectedIndex =
         currentIndex + 1 >= spectator.component.tabs.length
           ? 0
           : currentIndex + 1;
       spectator.dispatchKeyboardEvent(spectator.element, 'keyup', 'ArrowRight');
-      expect(spectator.component.activeIndex).toEqual(currentIndex + 1);
+      expect(spectator.component.activeIndex).toEqual(expectedIndex);
     });
 
     it('should wrap back to the first tab if the ArrowRight key is pressed and the last tab is active', () => {
@@ -76,8 +76,8 @@ describe('TabsComponent', () => {
     });
 
     it('should move to the previous tab if the LeftArrow key is pressed', () => {
-      let currentIndex = spectator.component.activeIndex;
-      let expectedIndex =
+      const currentIndex = spectator.component.activeIndex;
+      const expectedIndex =
         currentIndex - 1 < 0
           ? spectator.component.tabs.length - 1
           : currentIndex - 1;
@@ -94,11 +94,11 @@ describe('TabsComponent', () => {
       spectator.dispatchKeyboardEvent(spectator.element, 'keyup', 'End');
       expect(spectator.component.activeIndex).toEqual(3);
     });
-    it("shouldn't move anywhere if the shift key is pressed", () => {
+    it('should not move anywhere if the shift key is pressed', () => {
       spectator.keyboard.pressKey('shift.ArrowRight');
       expect(spectator.component.activeIndex).toEqual(0);
     });
-    it("shouldn't move anywhere if the shift key is pressed", () => {
+    it('should not move anywhere if the shift key is pressed', () => {
       spectator.keyboard.pressKey('ctrl.ArrowRight');
       expect(spectator.component.activeIndex).toEqual(0);
     });
@@ -117,7 +117,9 @@ describe('TabsComponent', () => {
   describe('[METHOD]: deactivateAll', () => {
     it('should deactivate all tabs', () => {
       // Set Up Scenario
-      spectator.component.tabs.forEach((tab) => (tab.isActive = true)); // Let's active them all, for fun
+      spectator.component.tabs.forEach((tab) => {
+        tab.isActive = true;
+      }); // Let's active them all, for fun
 
       spectator.component.deactivateAll();
 
