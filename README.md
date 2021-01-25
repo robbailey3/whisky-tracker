@@ -3,7 +3,7 @@
 # Rob & Dad's Whisky Tracker
 
 A project for me and my Dad to track what whisky we've tried and what we thought of them.
-<strong>Storyboard: </string>https://robbailey3.github.io/whisky-tracker/
+<strong>Storyboard: </strong>https://robbailey3.github.io/whisky-tracker/
 
 </div>
 
