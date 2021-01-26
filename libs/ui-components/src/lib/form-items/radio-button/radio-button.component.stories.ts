@@ -21,7 +21,6 @@ export const RadioButton = (args: RadioButtonComponent) => ({
       [helperText]="helperText"
       [required]="required"
       [(ngModel)]="value"></rob-radio-button>
-      {{ form.value | json }}
   </form>`
 });
 

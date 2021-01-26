@@ -21,7 +21,6 @@ export const Slider: Story<SliderComponent> = (args: SliderComponent) => ({
     [id]="id" 
     [name]="name" 
     [(ngModel)]="value"></rob-slider>
-    {{ form.value | json }}
   <form>`
 });
 

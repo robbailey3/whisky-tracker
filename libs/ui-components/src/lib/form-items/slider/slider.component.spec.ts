@@ -1,26 +1,49 @@
 import { FormsModule } from '@angular/forms';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { createHostFactory, SpectatorHost } from '@ngneat/spectator';
+import { Component } from '@angular/core';
 import { SliderComponent } from './slider.component';
 
-describe('SliderComponent', () => {
-  let component: SliderComponent;
-  let fixture: ComponentFixture<SliderComponent>;
+@Component({ selector: 'rob-slider-host' })
+class SliderHostComponent {
+  public value = false;
+}
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [SliderComponent],
-      imports: [FormsModule]
-    }).compileComponents();
+describe('SliderComponent', () => {
+  let spectator: SpectatorHost<SliderComponent, SliderHostComponent>;
+  let component: SliderComponent;
+
+  const hostFactory = createHostFactory({
+    component: SliderComponent,
+    host: SliderHostComponent,
+    imports: [FormsModule]
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SliderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    spectator = hostFactory<SliderHostComponent>(`
+      <form ngForm #form="ngForm">
+        <rob-slider
+        label="label" 
+        helperText="helperText" 
+        id="checkbox-id" 
+        name="name" 
+        [(ngModel)]="value"
+        required></rob-slider>
+      <form>`);
+    component = spectator.component;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should toggle value on click', () => {
+    const initialValue = spectator.hostComponent.value;
+
+    const sliderEl = spectator.query('#checkbox-id');
+
+    spectator.dispatchMouseEvent(sliderEl, 'click');
+
+    expect(spectator.hostComponent.value).toEqual(!initialValue);
   });
 });
