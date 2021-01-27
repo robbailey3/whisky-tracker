@@ -32,6 +32,7 @@
     <ng-container *ngFor="let item of carouselItems; let i = index">
       <rob-button
         [icon]="i === activeIndex ? faCircle : faDotCircle"
+        variant="ghost"
         (buttonClick)="setActiveCarouselItem(i)"
         ><span class="sr-only">Go to slide {{ i + 1 }}</span></rob-button
       >

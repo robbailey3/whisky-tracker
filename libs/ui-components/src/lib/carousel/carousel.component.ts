@@ -87,14 +87,13 @@ export class CarouselComponent implements AfterContentInit {
    * A method to loop through the CarouselItems and set *only* the active one to active
    * @param {number} [index] An optional parameter to set a specific index
    */
-  private setActiveCarouselItem(index?: number) {
+  public setActiveCarouselItem(index?: number) {
     if (index !== undefined) {
       this.pause();
       this.activeIndex = index;
       this.startCarousel();
     }
     this.carouselItems.forEach((item, i) => {
-      // eslint-disable-next-line no-param-reassign
       item.isActive = this.activeIndex === i;
     });
   }

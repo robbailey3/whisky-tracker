@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SpectatorHost } from '@ngneat/spectator';
 import { ButtonsModule } from '../buttons/buttons.module';
 import { CarouselItemComponent } from './carousel-item/carousel-item.component';
 
@@ -17,6 +18,10 @@ import { CarouselComponent } from './carousel.component';
 class CarouselTestComponent {}
 
 describe('CarouselComponent', () => {
+  // TODO: Refactor this to use Spectator
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  let spectator: SpectatorHost<CarouselComponent, CarouselTestComponent>;
+
   let component: CarouselComponent;
   let fixture: ComponentFixture<CarouselTestComponent>;
 

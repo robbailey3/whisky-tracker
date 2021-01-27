@@ -2,6 +2,8 @@ import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { DatabaseService } from './database.service';
 
+jest.mock('mongodb');
+
 describe('DatabaseService', () => {
   let service: DatabaseService;
 

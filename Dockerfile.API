@@ -17,4 +17,4 @@ ENV NODE_ENV=${NODE_ENV}
 #Expose port and start application
 EXPOSE 3000
 RUN nx run api:build
-CMD pm2 start ./dist/apps/api/main.js 
+CMD pm2-runtime ./dist/apps/api/main.js 

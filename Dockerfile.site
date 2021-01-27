@@ -17,4 +17,4 @@ ENV NODE_ENV=${NODE_ENV}
 EXPOSE 4000
 RUN npm run build:ssr
 RUN npm run prerender
-CMD node ./dist/site/server/main.ts 
+CMD node ./dist/site/server/main.js

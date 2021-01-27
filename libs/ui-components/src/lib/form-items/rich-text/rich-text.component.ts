@@ -41,6 +41,8 @@ export class RichTextComponent implements ControlValueAccessor {
 
   public onChange;
 
+  public onTouched;
+
   public writeValue(value: string): void {
     this.value = value;
   }
@@ -49,7 +51,9 @@ export class RichTextComponent implements ControlValueAccessor {
     this.onChange = fn;
   }
 
-  public registerOnTouched(fn: any): void {}
+  public registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
 
   public change() {
     this.onChange(this.value);
