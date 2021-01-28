@@ -1,40 +1,36 @@
 import { Story } from '@storybook/angular';
-import { SliderComponent } from './slider.component';
+import { SlideToggleComponent } from './slide-toggle.component';
 
 export default {
-  title: 'Form Items/Slider'
+  title: 'Form Items/Slide Toggle'
 };
 
-export const Slider: Story<SliderComponent> = (args: SliderComponent) => ({
+export const SlideToggle: Story<SlideToggleComponent> = (
+  args: SlideToggleComponent
+) => ({
   moduleMetadata: {
     imports: [],
-    declarations: [SliderComponent]
+    declarations: [SlideToggleComponent]
   },
-  component: SliderComponent,
+  component: SlideToggleComponent,
   props: { ...args },
   template: `
   <form ngForm #form="ngForm">
-    <rob-slider
+    <rob-slide-toggle
     [label]="label" 
     [helperText]="helperText" 
     [required]="required"
-    [min]="min"
-    [max]="max"
-    [step]="step"
     [id]="id" 
     [name]="name" 
-    [(ngModel)]="value"></rob-slider>
+    [(ngModel)]="value"></rob-slide-toggle>
   <form>`
 });
 
-Slider.args = {
+SlideToggle.args = {
   helperText: 'Helper text',
   id: 'id',
   label: 'Label',
   name: 'name',
   required: true,
-  value: 40,
-  min: 0,
-  max: 100,
-  step: 2
+  value: true
 };

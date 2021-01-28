@@ -7,9 +7,10 @@ import { RadioButtonComponent } from './radio-button/radio-button.component';
 import { TextareaComponent } from './textarea/textarea.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { SelectComponent } from './select/select.component';
-import { SliderComponent } from './slider/slider.component';
 import { WordCountDirective } from './validators/word-count.directive';
 import { RichTextComponent } from './rich-text/rich-text.component';
+import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
+import { SliderComponent } from './slider/slider.component';
 
 @NgModule({
   declarations: [
@@ -18,19 +19,21 @@ import { RichTextComponent } from './rich-text/rich-text.component';
     TextareaComponent,
     FileUploadComponent,
     SelectComponent,
-    SliderComponent,
+    SlideToggleComponent,
     WordCountDirective,
-    RichTextComponent
+    RichTextComponent,
+    SliderComponent
   ],
   exports: [
     TextInputComponent,
     RadioButtonComponent,
     TextareaComponent,
     FileUploadComponent,
+    SlideToggleComponent,
     SelectComponent,
-    SliderComponent,
     WordCountDirective,
-    RichTextComponent
+    RichTextComponent,
+    SliderComponent
   ],
   providers: [],
   imports: [CommonModule, FormsModule, EditorModule]
