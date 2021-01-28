@@ -13,7 +13,10 @@ import { DistilleryModule } from './distillery/distillery.module';
     ConfigModule.forRoot({
       cache: false,
       isGlobal: true,
-      envFilePath: process.env.NODE_ENV === 'production' ? '.env' : '.dev.env'
+      envFilePath:
+        process.env.NODE_ENV === 'production'
+          ? './apps/api/.env'
+          : './apps/api/.dev.env'
     }),
     UserModule,
     WhiskyModule,
