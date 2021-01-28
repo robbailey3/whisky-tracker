@@ -9,6 +9,7 @@ import { GlobalModule } from './global/global.module';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +20,8 @@ import { environment } from '../environments/environment';
     UiComponentsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
-    })
+    }),
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]

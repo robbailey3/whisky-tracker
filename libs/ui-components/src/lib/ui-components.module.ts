@@ -13,6 +13,7 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { CardComponent } from './card/card.component';
 import { TooltipDirective } from './tooltip/tooltip.directive';
 import { FocusTrapDirective } from './focus-trap/focus-trap.directive';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { FocusTrapDirective } from './focus-trap/focus-trap.directive';
     ModalComponent,
     CardComponent,
     TooltipDirective,
-    FocusTrapDirective
+    FocusTrapDirective,
+    AlertComponent
   ],
   providers: [NotificationsService],
   declarations: [
@@ -43,7 +45,8 @@ import { FocusTrapDirective } from './focus-trap/focus-trap.directive';
     TooltipComponent,
     CardComponent,
     TooltipDirective,
-    FocusTrapDirective
+    FocusTrapDirective,
+    AlertComponent
   ]
 })
 export class UiComponentsModule {}
