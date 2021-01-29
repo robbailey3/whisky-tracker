@@ -2,30 +2,24 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { Component, forwardRef, Input } from '@angular/core';
 
 @Component({
-  selector: 'rob-slider',
-  templateUrl: './slider.component.html',
-  styleUrls: ['./slider.component.scss'],
+  selector: 'rob-slide-toggle',
+  templateUrl: './slide-toggle.component.html',
+  styleUrls: ['./slide-toggle.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       // eslint-disable-next-line no-use-before-define
-      useExisting: forwardRef(() => SliderComponent),
+      useExisting: forwardRef(() => SlideToggleComponent),
       multi: true
     }
   ]
 })
-export class SliderComponent implements ControlValueAccessor {
+export class SlideToggleComponent implements ControlValueAccessor {
   @Input() label: string;
 
   @Input() id: string;
 
   @Input() name: string;
-
-  @Input() min = 0;
-
-  @Input() max = 100;
-
-  @Input() step = 1;
 
   @Input() disabled: boolean;
 
@@ -33,18 +27,18 @@ export class SliderComponent implements ControlValueAccessor {
 
   @Input() helperText: string;
 
-  public value: number;
+  public value: boolean;
 
-  public onChange: (newValue: number) => any;
+  public onChange: (newValue: boolean) => any;
 
   public onTouched: () => any;
 
-  public handleChange($event: MouseEvent) {
+  public handleChange($event) {
     const target = $event.target as HTMLInputElement;
-    this.onChange(parseInt(target.value, 10));
+    this.onChange(target.checked);
   }
 
-  public writeValue(value: number) {
+  public writeValue(value: boolean) {
     this.value = value;
   }
 
