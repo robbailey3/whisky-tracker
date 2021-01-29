@@ -5,22 +5,22 @@ import { Component } from '@angular/core';
 import { SlideToggleComponent } from './slide-toggle.component';
 
 @Component({ selector: 'rob-slide-toggle-host' })
-class SliderHostComponent {
+class SlideToggleHostComponent {
   public value = false;
 }
 
 describe('[COMPONENT]: SlideToggleComponent', () => {
-  let spectator: SpectatorHost<SlideToggleComponent, SliderHostComponent>;
+  let spectator: SpectatorHost<SlideToggleComponent, SlideToggleHostComponent>;
   let component: SlideToggleComponent;
 
   const hostFactory = createHostFactory({
     component: SlideToggleComponent,
-    host: SliderHostComponent,
+    host: SlideToggleHostComponent,
     imports: [FormsModule]
   });
 
   beforeEach(() => {
-    spectator = hostFactory<SliderHostComponent>(`
+    spectator = hostFactory<SlideToggleHostComponent>(`
       <form ngForm #form="ngForm">
         <rob-slide-toggle
         label="label" 
@@ -35,6 +35,12 @@ describe('[COMPONENT]: SlideToggleComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should correctly set the form label', () => {
+    expect(
+      spectator.query<HTMLLabelElement>('.form-label').textContent
+    ).toContain('label');
   });
 
   it('should toggle value on click', () => {

@@ -32,7 +32,7 @@ export class TooltipDirective implements OnDestroy {
   ) {}
 
   @HostListener('mouseover')
-  public handleMouseOver($event) {
+  public handleMouseOver() {
     this.create();
   }
 
