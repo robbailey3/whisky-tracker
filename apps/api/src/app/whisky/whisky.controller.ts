@@ -1,4 +1,5 @@
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOkResponse,
   ApiOperation,
@@ -16,9 +17,12 @@ import {
   BadRequestException,
   Delete,
   Patch,
-  UseInterceptors
+  UseInterceptors,
+  Req,
+  UseGuards
 } from '@nestjs/common';
 import { ObjectID } from 'mongodb';
+import { AuthGuard } from '@nestjs/passport';
 import { WhiskyDto } from './dto/whisky.dto';
 import { EntityQuery } from '../shared/entity-query/entity-query';
 import { WhiskyService } from './whisky.service';
@@ -44,6 +48,24 @@ export class WhiskyController {
   public find(@Query() query: EntityQuery<WhiskyDto>) {
     const { filter, ...options } = query;
     return this.whiskyService.find(filter, options);
+  }
+
+  @Get('me/favourites')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  public getMyFavourites(@Req() req: any) {
+    return this.whiskyService.getUsersFavouriteWhiskies(
+      ObjectID.createFromHexString(req.user.id)
+    );
+  }
+
+  @Get('me/current')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  public getMyCurrent(@Req() req: any) {
+    return this.whiskyService.getUsersCurrentWhiskies(
+      ObjectID.createFromHexString(req.user.id)
+    );
   }
 
   @Get(':id')
@@ -72,9 +94,10 @@ export class WhiskyController {
   @Post('')
   @ApiBody({
     description: 'The new Whisky to add to the database',
-    required: true
+    required: true,
+    type: WhiskyDto
   })
-  public insertOne(@Body() body: Partial<WhiskyDto>) {
+  public insertOne(@Body() body: WhiskyDto) {
     return this.whiskyService.insertOne(body);
   }
 
