@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ObjectID } from 'mongodb';
 import { Observable, of } from 'rxjs';
-import { defaultIfEmpty, filter, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { DatabaseService } from '../shared/database/database.service';
 import { EntityService } from '../shared/entity-service/entity.service';
 import { UserDto } from '../user/dto/user.dto';
