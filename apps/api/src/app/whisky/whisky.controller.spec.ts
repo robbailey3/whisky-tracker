@@ -76,13 +76,15 @@ describe('WhiskyController', () => {
     });
 
     it('should call whiskyService->insertOne', () => {
-      controller.insertOne({});
+      controller.insertOne(new WhiskyDto());
       expect(spy).toHaveBeenCalled();
     });
 
     it('should pass the body parameter', () => {
-      controller.insertOne({ name: 'Name' });
-      expect(spy).toHaveBeenCalledWith({ name: 'Name' });
+      const dto = new WhiskyDto();
+      dto.name = 'Name';
+      controller.insertOne(dto);
+      expect(spy).toHaveBeenCalledWith(dto);
     });
   });
 
