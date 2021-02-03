@@ -1,6 +1,17 @@
 .navigation {
+  @apply fixed top-0 w-64 duration-700 bg-portafino-100 h-screen shadow-md z-50;
+  left: -16rem;
+  &.expanded {
+    left: 0;
+  }
+  @apply md:relative md:left-0 md:h-auto md:bg-transparent md:shadow-none;
+  .btn {
+    position: absolute;
+    right: -3rem;
+    @apply md:hidden bg-white;
+  }
   .nav-list {
-    @apply p-0 m-0 block list-none;
+    @apply p-0 m-0 list-none md:block;
     .nav-list-item {
       @apply block p-0 m-0 md:inline-block;
     }
