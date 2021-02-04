@@ -14,6 +14,7 @@ export class AuthService {
 
   /**
    * This method is primarily used by the Passport 'local' strategy to login a user.
+   * TODO: Make this use more RxJSeyness
    * @param email The email address of the user
    * @param pass The password of the user. NOTE: This should NEVER be exposed to any logs or anything. Ever.
    */
