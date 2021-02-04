@@ -80,15 +80,38 @@ describe('WhiskyController', () => {
 
       expect(spy).toHaveBeenCalled();
     });
+
+    it('should throw a BadRequestException if an invalid ID is passed as a parameter', () => {
+      const invalidID = 'invalid-id';
+
+      expect(() => controller.getFavourites(invalidID, {})).toThrow(
+        BadRequestException
+      );
+    });
   });
   describe('[METHOD]: getCurrent', () => {
     it('should be defined', () => {
       expect(controller.getCurrent).toBeDefined();
     });
+    it('should throw a BadRequestException if an invalid ID is passed as a parameter', () => {
+      const invalidID = 'invalid-id';
+
+      expect(() => controller.getCurrent(invalidID, {})).toThrow(
+        BadRequestException
+      );
+    });
   });
   describe('[METHOD]: getWishlist', () => {
     it('should be defined', () => {
       expect(controller.getWishlist).toBeDefined();
+    });
+
+    it('should throw a BadRequestException if an invalid ID is passed as a parameter', () => {
+      const invalidID = 'invalid-id';
+
+      expect(() => controller.getWishlist(invalidID, {})).toThrow(
+        BadRequestException
+      );
     });
   });
   describe('[METHOD]: insertOne', () => {

@@ -57,4 +57,54 @@ describe('WhiskyService', () => {
       expect(findSpy).toHaveBeenCalledWith({ _id: objectID });
     });
   });
+
+  describe('[METHOD]: getUsersCurrentWhiskies', () => {
+    let findSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+      findSpy = jest.spyOn(userService, 'findOne');
+      findSpy.mockReturnValue(new Observable());
+    });
+    it('should be defined', () => {
+      expect(service.getUsersCurrentWhiskies).toBeDefined();
+    });
+
+    it('should call userService->findOne', () => {
+      service.getUsersCurrentWhiskies(new ObjectID());
+
+      expect(findSpy).toHaveBeenCalled();
+    });
+
+    it('should call userService->findOne with an _id search', () => {
+      const objectID = new ObjectID();
+      service.getUsersCurrentWhiskies(objectID);
+
+      expect(findSpy).toHaveBeenCalledWith({ _id: objectID });
+    });
+  });
+
+  describe('[METHOD]: getUsersWishlist', () => {
+    let findSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+      findSpy = jest.spyOn(userService, 'findOne');
+      findSpy.mockReturnValue(new Observable());
+    });
+    it('should be defined', () => {
+      expect(service.getUsersWishlist).toBeDefined();
+    });
+
+    it('should call userService->findOne', () => {
+      service.getUsersWishlist(new ObjectID());
+
+      expect(findSpy).toHaveBeenCalled();
+    });
+
+    it('should call userService->findOne with an _id search', () => {
+      const objectID = new ObjectID();
+      service.getUsersWishlist(objectID);
+
+      expect(findSpy).toHaveBeenCalledWith({ _id: objectID });
+    });
+  });
 });

@@ -13,4 +13,9 @@ export class WhiskyDto {
   @IsString()
   @IsNotEmpty()
   public name: string;
+
+  @ApiProperty({ name: 'name', type: 'string' })
+  @IsString()
+  @IsNotEmpty()
+  public distilleryID: ObjectID;
 }
