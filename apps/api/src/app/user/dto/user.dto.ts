@@ -51,4 +51,8 @@ export class UserDto {
   @ApiProperty()
   @IsEmpty()
   public favourites: ObjectID[];
+
+  @ApiProperty()
+  @IsEmpty()
+  public wishlist: ObjectID[];
 }

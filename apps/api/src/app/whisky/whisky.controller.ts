@@ -19,7 +19,8 @@ import {
   Patch,
   UseInterceptors,
   Req,
-  UseGuards
+  UseGuards,
+  Logger
 } from '@nestjs/common';
 import { ObjectID } from 'mongodb';
 import { AuthGuard } from '@nestjs/passport';
@@ -50,21 +51,60 @@ export class WhiskyController {
     return this.whiskyService.find(filter, options);
   }
 
-  @Get('me/favourites')
+  @Get('favourites/:id')
   @ApiBearerAuth()
-  @UseGuards(AuthGuard('jwt'))
-  public getMyFavourites(@Req() req: any) {
+  @ApiParam({ name: 'id', required: false })
+  public getFavourites(@Param('id') idParam: string, @Req() req: any) {
+    let id: string;
+    if (!idParam) {
+      id = req.user.id;
+    } else {
+      id = idParam;
+    }
+
+    if (!ObjectID.isValid(id)) {
+      throw new BadRequestException('Provided id must be a valid id');
+    }
     return this.whiskyService.getUsersFavouriteWhiskies(
-      ObjectID.createFromHexString(req.user.id)
+      ObjectID.createFromHexString(id)
     );
   }
 
-  @Get('me/current')
+  @Get('current/:id')
   @ApiBearerAuth()
-  @UseGuards(AuthGuard('jwt'))
-  public getMyCurrent(@Req() req: any) {
+  @ApiParam({ name: 'id', required: false })
+  public getCurrent(@Param('id') idParam: string, @Req() req: any) {
+    let id: string;
+    if (!idParam) {
+      id = req.user.id;
+    } else {
+      id = idParam;
+    }
+
+    if (!ObjectID.isValid(id)) {
+      throw new BadRequestException('Provided id must be a valid id');
+    }
     return this.whiskyService.getUsersCurrentWhiskies(
-      ObjectID.createFromHexString(req.user.id)
+      ObjectID.createFromHexString(id)
+    );
+  }
+
+  @Get('wishlist/:id')
+  @ApiBearerAuth()
+  @ApiParam({ name: 'id', required: false })
+  public getWishlist(@Param('id') idParam: string, @Req() req: any) {
+    let id: string;
+    if (!idParam) {
+      id = req.user.id;
+    } else {
+      id = idParam;
+    }
+
+    if (!ObjectID.isValid(id)) {
+      throw new BadRequestException('Provided id must be a valid id');
+    }
+    return this.whiskyService.getUsersWishlist(
+      ObjectID.createFromHexString(id)
     );
   }
 

@@ -46,4 +46,19 @@ export class WhiskyService extends EntityService {
         })
       );
   }
+
+  public getUsersWishlist(userID: ObjectID): Observable<WhiskyDto[]> {
+    return this.userService
+      .findOne<UserDto>({ _id: userID })
+      .pipe(
+        switchMap((user) => {
+          if (!user || !user.currentWhiskies) {
+            return of([]);
+          }
+          return this.find<WhiskyDto>({
+            _id: { $in: [...user.wishlist] }
+          });
+        })
+      );
+  }
 }

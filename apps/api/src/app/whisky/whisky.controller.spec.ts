@@ -69,6 +69,28 @@ describe('WhiskyController', () => {
     });
   });
 
+  describe('[METHOD]: getFavourites', () => {
+    it('should be defined', () => {
+      expect(controller.getFavourites).toBeDefined();
+    });
+    it('should call whiskyService->getUsersFavouriteWhiskies', () => {
+      const spy = jest.spyOn(service, 'getUsersFavouriteWhiskies');
+      const validID = new ObjectID();
+      controller.getFavourites(validID.toHexString(), {});
+
+      expect(spy).toHaveBeenCalled();
+    });
+  });
+  describe('[METHOD]: getCurrent', () => {
+    it('should be defined', () => {
+      expect(controller.getCurrent).toBeDefined();
+    });
+  });
+  describe('[METHOD]: getWishlist', () => {
+    it('should be defined', () => {
+      expect(controller.getWishlist).toBeDefined();
+    });
+  });
   describe('[METHOD]: insertOne', () => {
     const spy = jest.spyOn(WhiskyService.prototype, 'insertOne');
     it('should be defined', () => {
@@ -93,7 +115,7 @@ describe('WhiskyController', () => {
     let validID;
     const invalidID = 'invalid_id';
 
-    const updatedDistillery: WhiskyDto = plainToClass(WhiskyDto, {
+    const updatedWhisky: WhiskyDto = plainToClass(WhiskyDto, {
       _id: '',
       name: ''
     });
@@ -108,18 +130,18 @@ describe('WhiskyController', () => {
     });
 
     it('should throw an error when an invalid ID is provided', () => {
-      expect(() => controller.updateOne(invalidID, updatedDistillery)).toThrow(
+      expect(() => controller.updateOne(invalidID, updatedWhisky)).toThrow(
         BadRequestException
       );
     });
     it('should not throw an error when a valid ID is provided', () => {
-      expect(() =>
-        controller.updateOne(validID, updatedDistillery)
-      ).not.toThrow(BadRequestException);
+      expect(() => controller.updateOne(validID, updatedWhisky)).not.toThrow(
+        BadRequestException
+      );
     });
 
-    it('should call distilleryService->updateOne', () => {
-      controller.updateOne(validID, updatedDistillery);
+    it('should call whiskyService->updateOne', () => {
+      controller.updateOne(validID, updatedWhisky);
       expect(spy).toHaveBeenCalled();
     });
   });
@@ -148,7 +170,7 @@ describe('WhiskyController', () => {
       );
     });
 
-    it('should call distilleryService->deleteOne', () => {
+    it('should call whiskyService->deleteOne', () => {
       controller.deleteOne(validID);
       expect(spy).toHaveBeenCalled();
     });
