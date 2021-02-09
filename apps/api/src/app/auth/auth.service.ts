@@ -1,6 +1,8 @@
 import * as bcrypt from 'bcrypt';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { map, switchMap } from 'rxjs/operators';
+import { from, throwError, of } from 'rxjs';
 import { UserDto } from '../user/dto/user.dto';
 import { LoginDto } from './dto/login.dto';
 import { UserService } from '../user/user.service';
@@ -14,66 +16,65 @@ export class AuthService {
 
   /**
    * This method is primarily used by the Passport 'local' strategy to login a user.
-   * TODO: Make this use more RxJSeyness
    * @param email The email address of the user
    * @param pass The password of the user. NOTE: This should NEVER be exposed to any logs or anything. Ever.
    */
-  public async validateUser(email: string, pass: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.userService.findOne({ email }).subscribe({
-        next: async (user: UserDto) => {
+  public validateUser(email: string, pass: string): Promise<UserDto> {
+    return this.userService
+      .findOne({ email })
+      .pipe(
+        map((user: UserDto) => {
           if (!user || !user.password) {
-            reject();
-            return;
+            return throwError(new UnauthorizedException());
           }
-          // Use bcrypt to check if the password is correct
-          const passwordIsCorrect = await bcrypt.compare(pass, user.password);
-
-          const { password, ...result } = user;
-          if (passwordIsCorrect) {
-            resolve(result);
+          return user;
+        }),
+        switchMap((user: UserDto) => {
+          return from(
+            bcrypt.compare(pass, user.password) as Promise<boolean>
+          ).pipe(
+            map((passwordIsCorrect) => ({
+              passwordIsCorrect,
+              user
+            }))
+          );
+        }),
+        switchMap((res) => {
+          if (!res.passwordIsCorrect) {
+            return throwError(new UnauthorizedException());
           }
-          reject();
-        },
-        error: (err) => {
-          reject(err);
-        }
-      });
-    });
+          return of(res.user);
+        })
+      )
+      .toPromise();
   }
 
   /**
    * This method returns a JWT token for a user who has successfully logged in. This, hopefully, will be me ()
    * @param user The email and password object
    */
-  public login(user: LoginDto): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.userService
-        .findOneAndUpdate<UserDto>(
-          { email: user.email },
-          { $set: { lastLogIn: new Date() } },
-          { upsert: true }
-        )
-        .subscribe({
-          next: (result: UserDto) => {
-            const userFromDB = result;
-            if (!userFromDB) {
-              // This shouldn't happen, but just in case.
-              throw new UnauthorizedException('Login Failed');
-            }
-            // Create the JWT Payload
-            // eslint-disable-next-line no-underscore-dangle
-            const payload = { email: userFromDB.email, id: userFromDB._id };
-            resolve({
-              token: this.jwtService.sign(payload, {
-                expiresIn: '1h'
-              })
-            });
-          },
-          error: (err) => {
-            reject(err);
+  public login(user: LoginDto): Promise<{ token: string }> {
+    return this.userService
+      .findOneAndUpdate<UserDto>(
+        { email: user.email },
+        { $set: { lastLogIn: new Date() } },
+        { upsert: true }
+      )
+      .pipe(
+        switchMap((userResult: UserDto) => {
+          if (!userResult) {
+            return throwError(new UnauthorizedException());
           }
-        });
-    });
+          // eslint-disable-next-line no-underscore-dangle
+          const payload = { email: userResult.email, id: userResult._id };
+          // Return an observable of the JWT payload
+          return of({
+            token: this.jwtService.sign(payload, {
+              expiresIn: '1h'
+            })
+          });
+        })
+      )
+      .toPromise();
   }
 }
