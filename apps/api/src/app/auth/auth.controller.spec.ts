@@ -24,17 +24,17 @@ describe('AuthController', () => {
   describe('[METHOD: login]', () => {
     let spy: jest.SpyInstance;
     beforeEach(() => {
-      spy = jest.spyOn(service, 'login');
+      spy = jest.spyOn(service, 'createJWT');
     });
     it('should be defined', () => {
       expect(controller.login).toBeDefined();
     });
-    it('should call authService->login', () => {
+    it('should call authService->createJWT', () => {
       controller.login({ user: {} });
       expect(spy).toHaveBeenCalled();
     });
 
-    it('should pass the user from the request to authService->login', () => {
+    it('should pass the user from the request to authService->createJWT', () => {
       const mockRequest = { user: { email: 'test@test.com' } };
       controller.login(mockRequest);
       expect(spy).toHaveBeenCalledWith(mockRequest.user);

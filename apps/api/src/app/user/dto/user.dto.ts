@@ -46,6 +46,10 @@ export class UserDto {
 
   @ApiProperty()
   @IsEmpty()
+  public failedLogins: number[];
+
+  @ApiProperty()
+  @IsEmpty()
   public currentWhiskies: ObjectID[];
 
   @ApiProperty()

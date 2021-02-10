@@ -31,6 +31,6 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @Post('login')
   public login(@Req() req: any) {
-    return this.authService.login(req.user);
+    return this.authService.createJWT(req.user);
   }
 }

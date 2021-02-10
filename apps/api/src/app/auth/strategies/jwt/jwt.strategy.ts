@@ -9,7 +9,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: configService.get<string>('JWT_KEY'),
+      secretOrKey: configService.get<string>('JWT_KEY')
     });
   }
 
@@ -19,7 +19,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
    * that we have previously signed and issued to a valid user.
    * So this is the method which deals with a successfully validated
    * user with a nice valid JWT.
-   *
    * @param payload
    * @returns
    */

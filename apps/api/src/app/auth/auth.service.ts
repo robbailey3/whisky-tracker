@@ -1,14 +1,16 @@
 import * as bcrypt from 'bcrypt';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { map, switchMap } from 'rxjs/operators';
-import { from, throwError, of } from 'rxjs';
 import { UserDto } from '../user/dto/user.dto';
 import { LoginDto } from './dto/login.dto';
 import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
+  private readonly BRUTE_TIMEOUT = 1000 * 60 * 0.5; // 15 minutes
+
+  private readonly MAX_ATTEMPTS = 5;
+
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService
@@ -19,62 +21,60 @@ export class AuthService {
    * @param email The email address of the user
    * @param pass The password of the user. NOTE: This should NEVER be exposed to any logs or anything. Ever.
    */
-  public validateUser(email: string, pass: string): Promise<UserDto> {
-    return this.userService
+  public async login(email: string, pass: string): Promise<UserDto> {
+    const user = (await this.userService
       .findOne({ email })
-      .pipe(
-        map((user: UserDto) => {
-          if (!user || !user.password) {
-            return throwError(new UnauthorizedException());
-          }
-          return user;
-        }),
-        switchMap((user: UserDto) => {
-          return from(
-            bcrypt.compare(pass, user.password) as Promise<boolean>
-          ).pipe(
-            map((passwordIsCorrect) => ({
-              passwordIsCorrect,
-              user
-            }))
-          );
-        }),
-        switchMap((res) => {
-          if (!res.passwordIsCorrect) {
-            return throwError(new UnauthorizedException());
-          }
-          return of(res.user);
-        })
-      )
-      .toPromise();
+      .toPromise()) as UserDto;
+
+    if (!user?.password) {
+      throw new UnauthorizedException();
+    }
+
+    if (
+      user.failedLogins?.filter(
+        (failedLogin) => failedLogin > Date.now() - this.BRUTE_TIMEOUT
+      ).length > this.MAX_ATTEMPTS
+    ) {
+      throw new UnauthorizedException();
+    }
+
+    if (!(await bcrypt.compare(pass, user.password))) {
+      this.userService.updateOne(
+        { email },
+        { $push: { failedLogins: Date.now() } }
+      );
+      throw new UnauthorizedException();
+    }
+    return user;
   }
 
   /**
    * This method returns a JWT token for a user who has successfully logged in. This, hopefully, will be me ()
-   * @param user The email and password object
+   * @param login The email and password object
    */
-  public login(user: LoginDto): Promise<{ token: string }> {
-    return this.userService
+  public async createJWT(login: LoginDto): Promise<{ token: string }> {
+    const user = await this.userService
       .findOneAndUpdate<UserDto>(
-        { email: user.email },
+        { email: login.email },
         { $set: { lastLogIn: new Date() } },
         { upsert: true }
       )
-      .pipe(
-        switchMap((userResult: UserDto) => {
-          if (!userResult) {
-            return throwError(new UnauthorizedException());
-          }
-          // eslint-disable-next-line no-underscore-dangle
-          const payload = { email: userResult.email, id: userResult._id };
-          // Return an observable of the JWT payload
-          return of({
-            token: this.jwtService.sign(payload, {
-              expiresIn: '1h'
-            })
-          });
-        })
-      )
       .toPromise();
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+    return {
+      token: this.jwtService.sign(
+        {
+          email: user.email,
+          // eslint-disable-next-line no-underscore-dangle
+          id: user._id
+        },
+        {
+          expiresIn: '1h'
+        }
+      )
+    };
   }
 }
