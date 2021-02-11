@@ -2,6 +2,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { GoogleMapsModule } from '@angular/google-maps';
 import { NotificationsService } from './notifications/notifications.service';
 import { FormItemsModule } from './form-items/form-items.module';
 import { ButtonsModule } from './buttons/buttons.module';
@@ -14,6 +15,7 @@ import { CardComponent } from './card/card.component';
 import { TooltipDirective } from './tooltip/tooltip.directive';
 import { FocusTrapDirective } from './focus-trap/focus-trap.directive';
 import { AlertComponent } from './alert/alert.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   imports: [
@@ -21,13 +23,15 @@ import { AlertComponent } from './alert/alert.component';
     BrowserAnimationsModule,
     ButtonsModule,
     FontAwesomeModule,
-    FormItemsModule
+    FormItemsModule,
+    GoogleMapsModule
   ],
   exports: [
     AccordionModule,
     ButtonsModule,
     BrowserAnimationsModule,
     FontAwesomeModule,
+    GoogleMapsModule,
     FormItemsModule,
     NotificationsModule,
     ChipComponent,
@@ -46,7 +50,8 @@ import { AlertComponent } from './alert/alert.component';
     CardComponent,
     TooltipDirective,
     FocusTrapDirective,
-    AlertComponent
+    AlertComponent,
+    MapComponent
   ]
 })
 export class UiComponentsModule {}
