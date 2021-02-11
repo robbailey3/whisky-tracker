@@ -6,8 +6,10 @@ import { of } from 'rxjs';
 import * as bcrypt from 'bcrypt';
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
+import { LoginDto } from './dto/login.dto';
 
 jest.mock('../user/user.service.ts');
+jest.mock('@nestjs/jwt');
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -15,11 +17,7 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        AuthService,
-        UserService,
-        { provide: JwtService, useFactory: () => class MockJwtService {} }
-      ]
+      providers: [AuthService, UserService, JwtService]
     }).compile();
 
     service = module.get<AuthService>(AuthService);
@@ -85,6 +83,66 @@ describe('AuthService', () => {
       await expect(
         service.login(params.email, params.password)
       ).rejects.toThrowError();
+    });
+  });
+
+  describe('[METHOD]: createJWT', () => {
+    it('should be defined', () => {
+      expect(service.createJWT).toBeDefined();
+    });
+
+    it('should call userService->findOneAndUpdate', async () => {
+      const testUser: LoginDto = {
+        email: 'test@test.com',
+        password: 'Password1'
+      };
+
+      const spy = jest.spyOn(userService, 'findOneAndUpdate').mockReturnValue(
+        of({
+          email: 'test@test.com',
+          _id: new ObjectId(),
+          failedLogins: []
+        })
+      );
+
+      await service.createJWT(testUser);
+
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('should throw an UnauthorizedError if a user is not found', async () => {
+      const testUser: LoginDto = {
+        email: 'test@test.com',
+        password: 'Password1'
+      };
+
+      const spy = jest
+        .spyOn(userService, 'findOneAndUpdate')
+        .mockReturnValue(of(null));
+
+      expect(() => service.createJWT(testUser)).rejects.toThrowError();
+
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('should call jwtService->sign', async () => {
+      const spy = jest.spyOn(JwtService.prototype, 'sign');
+
+      const testUser: LoginDto = {
+        email: 'test@test.com',
+        password: 'Password1'
+      };
+
+      jest.spyOn(userService, 'findOneAndUpdate').mockReturnValue(
+        of({
+          email: 'test@test.com',
+          _id: new ObjectId()
+        })
+      );
+
+      await service.createJWT(testUser);
+
+      expect(spy).toHaveBeenCalled();
     });
   });
 });
