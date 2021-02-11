@@ -42,7 +42,7 @@ describe('AuthService', () => {
         })
       );
 
-      const result = await service.login('test@test.com', 'Password1');
+      await service.login('test@test.com', 'Password1');
 
       expect(spy).toHaveBeenCalled();
       expect(spy).toHaveBeenCalledWith({
@@ -67,7 +67,7 @@ describe('AuthService', () => {
       ).resolves.not.toThrowError();
     });
 
-    it('should throw an error for a correct password', async () => {
+    it('should throw an error for an incorrect password', async () => {
       const params = { email: 'test@test.com', password: 'Password1' };
       const hashedPassword = await bcrypt.hash('SomeOtherPassword', 10);
 
@@ -77,6 +77,24 @@ describe('AuthService', () => {
           _id: new ObjectId(),
           password: hashedPassword,
           failedLogins: []
+        })
+      );
+
+      await expect(
+        service.login(params.email, params.password)
+      ).rejects.toThrowError();
+    });
+
+    it('should throw an error if the user has too many recent failed login requests', async () => {
+      const params = { email: 'test@test.com', password: 'Password1' };
+      const hashedPassword = await bcrypt.hash('Password1', 10);
+
+      jest.spyOn(userService, 'findOne').mockReturnValue(
+        of({
+          email: 'test@test.com',
+          _id: new ObjectId(),
+          password: hashedPassword,
+          failedLogins: [...Array(6).fill(Date.now())]
         })
       );
 

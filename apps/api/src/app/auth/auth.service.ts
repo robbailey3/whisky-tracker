@@ -26,10 +26,12 @@ export class AuthService {
       .findOne({ email })
       .toPromise()) as UserDto;
 
+    // Check if user is defined and it has a password defined
     if (!user?.password) {
       throw new UnauthorizedException();
     }
 
+    // Check if the user has too many failed recent login attempts
     if (
       user.failedLogins?.filter(
         (failedLogin) => failedLogin > Date.now() - this.BRUTE_TIMEOUT
@@ -38,6 +40,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
+    // Check if their password is correct
     if (!(await bcrypt.compare(pass, user.password))) {
       this.userService.updateOne(
         { email },
@@ -45,6 +48,8 @@ export class AuthService {
       );
       throw new UnauthorizedException();
     }
+
+    // If we're all good, we return the user object
     return user;
   }
 
@@ -61,9 +66,12 @@ export class AuthService {
       )
       .toPromise();
 
+    // If the user is undefined, something has gone bad.
     if (!user) {
       throw new UnauthorizedException();
     }
+
+    // Return a JWT for them
     return {
       token: this.jwtService.sign(
         {

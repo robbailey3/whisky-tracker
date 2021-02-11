@@ -7,6 +7,7 @@ jest.mock('./auth.service.ts');
 describe('AuthController', () => {
   let controller: AuthController;
   let service: AuthService;
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
