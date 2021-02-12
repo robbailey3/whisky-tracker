@@ -6,13 +6,28 @@ export default {
   title: 'Map'
 };
 
-export const Map = (args: { content: string }) => ({
+export const Map = (args: MapComponent) => ({
   moduleMetadata: {
     declarations: [MapComponent],
     imports: [GoogleMapsModule, NgtUniversalModule]
   },
-  component: MapComponent,
-  props: {
-    content: args.content
-  }
+  props: { ...args },
+  template: `<rob-map 
+  [centre]="centre" 
+  [width]="width" 
+  [height]="height" 
+  [zoom]="zoom" 
+  [useCurrentLocation]="useCurrentLocation">
+  </rob-map>`
 });
+
+Map.args = {
+  centre: {
+    lat: 0,
+    lng: 0
+  },
+  width: 800,
+  height: 400,
+  zoom: 6,
+  useCurrentLocation: true
+};

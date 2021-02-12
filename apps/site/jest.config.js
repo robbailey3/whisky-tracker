@@ -16,7 +16,8 @@ module.exports = {
     google: {
       maps: {
         Map: {},
-        Animation: {}
+        Animation: {},
+        MapTypeId: {}
       }
     }
   },

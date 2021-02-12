@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference types="google.maps" />
 import {
-  AfterViewInit,
+  AfterViewChecked,
   Component,
   Inject,
   Input,
@@ -30,7 +30,7 @@ export class MapComponent implements OnInit {
 
   @Input() useCurrentLocation = true;
 
-  @Input() options: google.maps.MapOptions = { mapTypeId: 'hybrid' };
+  @Input() options: google.maps.MapOptions = {};
 
   public markers: google.maps.MarkerOptions[] = [];
 
@@ -49,11 +49,6 @@ export class MapComponent implements OnInit {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
-        this.addMarker({
-          position: this.centre,
-          label: 'INIT MARKER'
-          // animation: google.maps.Animation.BOUNCE
-        });
       });
     }
   }
