@@ -11,14 +11,12 @@ import {
 import { GoogleMap } from '@angular/google-maps';
 import { WINDOW } from '@ng-toolkit/universal';
 
-declare const google: any;
-
 @Component({
   selector: 'rob-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapComponent implements OnInit {
   @ViewChild(GoogleMap) public map: google.maps.Map;
 
   @Input()
@@ -44,22 +42,20 @@ export class MapComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public ngAfterViewInit() {
-    console.log(this);
-  }
-
   public getCurrentLocation() {
-    window.navigator.geolocation.getCurrentPosition((position) => {
-      this.centre = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-      this.addMarker({
-        position: this.centre,
-        label: 'INIT MARKER',
-        animation: google.maps.Animation.BOUNCE
+    if ('navigator' in window && 'geolocation' in window.navigator) {
+      this.window.navigator.geolocation.getCurrentPosition((position) => {
+        this.centre = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        this.addMarker({
+          position: this.centre,
+          label: 'INIT MARKER'
+          // animation: google.maps.Animation.BOUNCE
+        });
       });
-    });
+    }
   }
 
   public addMarker(newMarker: google.maps.MarkerOptions) {

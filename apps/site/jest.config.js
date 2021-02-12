@@ -9,15 +9,21 @@ module.exports = {
       astTransformers: {
         before: [
           'jest-preset-angular/build/InlineFilesTransformer',
-          'jest-preset-angular/build/StripStylesTransformer',
-        ],
-      },
+          'jest-preset-angular/build/StripStylesTransformer'
+        ]
+      }
     },
+    google: {
+      maps: {
+        Map: {},
+        Animation: {}
+      }
+    }
   },
   coverageDirectory: '../../coverage/apps/site',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
     'jest-preset-angular/build/AngularSnapshotSerializer.js',
-    'jest-preset-angular/build/HTMLCommentSerializer.js',
-  ],
+    'jest-preset-angular/build/HTMLCommentSerializer.js'
+  ]
 };

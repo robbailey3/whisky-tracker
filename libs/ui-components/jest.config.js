@@ -12,6 +12,12 @@ module.exports = {
           'jest-preset-angular/build/StripStylesTransformer'
         ]
       }
+    },
+    google: {
+      maps: {
+        Map: {},
+        Animation: {}
+      }
     }
   },
   coverageDirectory: '../../coverage/libs/ui-components',
