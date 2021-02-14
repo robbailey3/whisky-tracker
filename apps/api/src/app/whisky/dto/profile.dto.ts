@@ -1,7 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, Max, Min } from 'class-validator';
+import { ObjectID } from 'mongodb';
+import { IsEmpty, IsNumber, Max, Min } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class ProfileDto {
+  @IsEmpty()
+  @Type(() => String)
+  @ApiProperty({ name: 'ID', type: ObjectID })
+  public _id: ObjectID;
+
   @IsNumber()
   @Min(0)
   @Max(5)

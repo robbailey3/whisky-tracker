@@ -5,6 +5,7 @@ import { SharedModule } from './shared/shared.module';
 import { UserModule } from './user/user.module';
 import { WhiskyModule } from './whisky/whisky.module';
 import { DistilleryModule } from './distillery/distillery.module';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { DistilleryModule } from './distillery/distillery.module';
           ? './apps/api/.env'
           : './apps/api/.dev.env'
     }),
+    LoggerModule.forRoot({}),
     UserModule,
     WhiskyModule,
     DistilleryModule
