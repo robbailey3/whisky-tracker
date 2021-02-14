@@ -28,6 +28,7 @@ import { WhiskyDto } from './dto/whisky.dto';
 import { EntityQuery } from '../shared/entity-query/entity-query';
 import { WhiskyService } from './whisky.service';
 import { QueryParserInterceptor } from '../shared/query-parser/query-parser.interceptor';
+import { ReviewDto } from './dto/review.dto';
 
 @Controller('whisky')
 @ApiTags('Whisky')
@@ -146,9 +147,21 @@ export class WhiskyController {
     if (!ObjectID.isValid(id)) {
       throw new BadRequestException('Provided id must be a valid id');
     }
-    return this.whiskyService.updateOne(
+    return this.whiskyService.findOneAndUpdate(
       { _id: ObjectID.createFromHexString(id) },
       { $set: { updatedWhisky } }
+    );
+  }
+
+  @Patch(':id/review')
+  public addReview(@Param('id') id: string, @Body() review: ReviewDto) {
+    if (!ObjectID.isValid(id)) {
+      throw new BadRequestException('Provided id must be a valid id');
+    }
+    review._id = new ObjectID();
+    return this.whiskyService.findOneAndUpdate(
+      { _id: ObjectID.createFromHexString(id) },
+      { $push: { reviews: review } }
     );
   }
 
@@ -160,5 +173,20 @@ export class WhiskyController {
     return this.whiskyService.deleteOne({
       _id: ObjectID.createFromHexString(id)
     });
+  }
+
+  @Delete(':id/review/:reviewId')
+  public deleteReview(
+    @Param('id') id: string,
+    @Param('reviewId') reviewId: string
+  ) {
+    console.log({ id, reviewId });
+    if (!ObjectID.isValid(id) || !ObjectID.isValid(reviewId)) {
+      throw new BadRequestException('Provided id must be a valid id');
+    }
+    return this.whiskyService.findOneAndUpdate(
+      { _id: ObjectID.createFromHexString(id) },
+      { $pull: { reviews: { _id: ObjectID.createFromHexString(reviewId) } } }
+    );
   }
 }

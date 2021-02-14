@@ -2,6 +2,8 @@
   "extends": "../../.eslintrc.json",
   "ignorePatterns": ["!**/*"],
   "rules": {
+    "no-param-reassign": [0],
+    "no-underscore-dangle": [0],
     "import/extensions": [0],
     "@typescript-eslint/explicit-member-accessibility": [
       "warn",
