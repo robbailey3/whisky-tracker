@@ -1,18 +1,13 @@
-import {
-  ClassSerializerInterceptor,
-  Logger,
-  ValidationPipe
-} from '@nestjs/common';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-
+import { Logger } from 'nestjs-pino';
 import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
 import * as helmet from 'helmet';
 import * as rateLimit from 'express-rate-limit';
 
 import { AppModule } from './app/app.module';
-import { QueryParserInterceptor } from './app/shared/query-parser/query-parser.interceptor';
 import { TransformInterceptor } from './app/shared/transform/transform.interceptor';
 
 async function bootstrap() {
@@ -28,6 +23,7 @@ async function bootstrap() {
       max: 1000
     })
   );
+  app.useLogger(app.get(Logger));
   app.enableCors({ origin: '*' });
   app.useGlobalPipes(
     new ValidationPipe({
@@ -59,7 +55,7 @@ async function bootstrap() {
 
   const port = process.env.PORT || 3333;
   await app.listen(port, () => {
-    Logger.log(`Listening at http://localhost:${port}/${globalPrefix}`);
+    console.log(`Listening at http://localhost:${port}/${globalPrefix}`);
   });
 }
 

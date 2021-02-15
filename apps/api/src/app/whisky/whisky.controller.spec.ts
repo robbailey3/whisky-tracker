@@ -144,7 +144,7 @@ describe('WhiskyController', () => {
     });
 
     beforeEach(() => {
-      spy = jest.spyOn(service, 'updateOne');
+      spy = jest.spyOn(service, 'findOneAndUpdate');
       validID = new ObjectID().toHexString();
     });
 
@@ -169,8 +169,8 @@ describe('WhiskyController', () => {
     });
   });
   describe('[METHOD]: deleteOne', () => {
-    let spy;
-    let validID;
+    let spy: jest.SpyInstance;
+    let validID: string;
     const invalidID = 'invalid_id';
 
     beforeEach(() => {
@@ -195,6 +195,47 @@ describe('WhiskyController', () => {
 
     it('should call whiskyService->deleteOne', () => {
       controller.deleteOne(validID);
+      expect(spy).toHaveBeenCalled();
+    });
+  });
+
+  describe('[METHOD]: addReview', () => {
+    let spy: jest.SpyInstance;
+    let validID: string;
+    const invalidID = 'invalid_id';
+
+    beforeEach(() => {
+      spy = jest.spyOn(service, 'findOneAndUpdate');
+      validID = new ObjectID().toHexString();
+    });
+    it('should be defined', () => {
+      expect(controller.addReview).toBeDefined();
+    });
+    it('should throw an error when an invalid ID is provided', () => {
+      expect(() =>
+        controller.addReview(invalidID, {
+          content: '',
+          rating: 5,
+          _id: new ObjectID()
+        })
+      ).toThrow(BadRequestException);
+    });
+    it('should not throw an error when a valid ID is provided', () => {
+      expect(() =>
+        controller.addReview(validID, {
+          content: '',
+          rating: 5,
+          _id: new ObjectID()
+        })
+      ).not.toThrow(BadRequestException);
+    });
+
+    it('should call whiskyService->findOneAndUpdate', () => {
+      controller.addReview(validID, {
+        content: '',
+        rating: 5,
+        _id: new ObjectID()
+      });
       expect(spy).toHaveBeenCalled();
     });
   });

@@ -26,7 +26,8 @@ const validCategories = [
 export class DistilleryDto {
   @IsEmpty()
   @ApiProperty({ name: '_id', type: ObjectID })
-  _id: ObjectID | string;
+  @Type(() => String)
+  _id: ObjectID;
 
   @ApiProperty({ name: 'name', type: String })
   @IsString()
