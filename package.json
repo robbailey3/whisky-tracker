@@ -12,6 +12,7 @@
     "test": "ng test",
     "test:all": "nx run-many --all --target=test -- --detectOpenHandles",
     "lint": "nx workspace-lint && ng lint",
+    "lint:all": "nx run-many --all --target=lint",
     "e2e": "ng e2e",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",

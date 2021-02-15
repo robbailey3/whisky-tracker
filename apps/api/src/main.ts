@@ -54,8 +54,9 @@ async function bootstrap() {
   SwaggerModule.setup('api/help', app, document);
 
   const port = process.env.PORT || 3333;
+  const logger = console;
   await app.listen(port, () => {
-    console.log(`Listening at http://localhost:${port}/${globalPrefix}`);
+    logger.log(`Listening at http://localhost:${port}/${globalPrefix}`);
   });
 }
 
