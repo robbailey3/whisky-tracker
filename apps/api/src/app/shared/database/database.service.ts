@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { from, Observable, Subject } from 'rxjs';
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { map } from 'rxjs/operators';
 import {
   ClientSession,
@@ -29,6 +29,7 @@ import {
   IndexOptions,
   IndexSpecification
 } from 'mongodb';
+import { Logger } from 'nestjs-pino';
 
 @Injectable()
 export class DatabaseService implements OnModuleInit {
@@ -42,7 +43,10 @@ export class DatabaseService implements OnModuleInit {
 
   private DB_URL: string;
 
-  constructor(private readonly configService: ConfigService) {
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly logger: Logger
+  ) {
     this.DB_URL = this.configService.get<string>('DB_URL');
   }
 
@@ -58,7 +62,7 @@ export class DatabaseService implements OnModuleInit {
         connectTimeoutMS: 10000
       })
         .then((client: MongoClient) => {
-          Logger.log('Connected to database', DatabaseService.name);
+          this.logger.log('Connected to database', DatabaseService.name);
           this.isLoaded.next();
           this.client = client;
           this.db = this.client.db();
@@ -77,6 +81,7 @@ export class DatabaseService implements OnModuleInit {
   }
 
   public setCollection(collectionName: string): this {
+    // this.logger.log(`Setting collection to ${collectionName}`);
     this.collection = this.db.collection(collectionName);
     return this;
   }

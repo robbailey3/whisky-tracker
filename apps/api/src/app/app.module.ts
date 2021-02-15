@@ -19,7 +19,9 @@ import { DistilleryModule } from './distillery/distillery.module';
           ? './apps/api/.env'
           : './apps/api/.dev.env'
     }),
-    LoggerModule.forRoot({}),
+    LoggerModule.forRoot({
+      pinoHttp: [{ prettyPrint: process.env.NODE_ENV !== 'production' }, null]
+    }),
     UserModule,
     WhiskyModule,
     DistilleryModule

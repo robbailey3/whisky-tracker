@@ -6,6 +6,8 @@ import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
 import * as helmet from 'helmet';
 import * as rateLimit from 'express-rate-limit';
+import * as Sentry from '@sentry/node';
+import * as Tracing from '@sentry/tracing';
 
 import { AppModule } from './app/app.module';
 import { TransformInterceptor } from './app/shared/transform/transform.interceptor';
@@ -13,6 +15,23 @@ import { TransformInterceptor } from './app/shared/transform/transform.intercept
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  Sentry.init({
+    dsn:
+      'https://c77e5e097ab847da9e7752f1268545cf@o368150.ingest.sentry.io/5637790',
+    integrations: [
+      // enable HTTP calls tracing
+      new Sentry.Integrations.Http({ tracing: true })
+    ],
+    tracesSampleRate: 1.0
+  });
+
+  // RequestHandler creates a separate execution context using domains, so that every
+  // transaction/span/breadcrumb is attached to its own Hub instance
+  app.use(Sentry.Handlers.requestHandler());
+  // TracingHandler creates a trace for every incoming request
+  app.use(Sentry.Handlers.tracingHandler());
+  // The error handler must be before any other error middleware and after all controllers
+  app.use(Sentry.Handlers.errorHandler());
   // Set app interceptors and stuff
   app.use(compression());
   app.use(helmet());

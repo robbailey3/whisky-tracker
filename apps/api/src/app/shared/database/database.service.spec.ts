@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Logger, LoggerModule, PinoLogger } from 'nestjs-pino';
 import { DatabaseService } from './database.service';
 
 jest.mock('mongodb');
@@ -9,7 +10,12 @@ describe('DatabaseService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [DatabaseService, ConfigService]
+      providers: [
+        DatabaseService,
+        ConfigService,
+        { provide: Logger, useValue: {} }
+      ],
+      imports: [LoggerModule]
     }).compile();
 
     service = module.get<DatabaseService>(DatabaseService);
